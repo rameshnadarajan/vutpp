@@ -1,5 +1,11 @@
 #summary Framework Guide
 
+= BoostTest =
+ * compiler.PreprocessorDefinitions need "VUTPP_BOOSTTEST"
+ * convert your project to Dynamic Dll
+ * Add bind code to your project from samples
+ * main suite name must "DefaultSuite" - use '#define BOOST_TEST_MODULE DefaultSuite'
+
 = UnitTest++ =
  * framework home : http://sourceforge.net/projects/unittest-cpp/
  * compiler.PreprocessorDefinitions need "VUTPP_UNITTEST++"
@@ -12,16 +18,16 @@
  * convert your project to Dynamic Dll
  * Add bind code to your project from samples
  * Fix library codes
- {{{
- TestRegistry.h  
- int TestCount() { return m_testCount; }
- Test** Tests() { return m_tests; } 
- Failure.h 
- int LineNumber() const { return m_lineNumber; }
+{{{
+TestRegistry.h  
+int TestCount() { return m_testCount; }
+Test** Tests() { return m_tests; } 
+Failure.h 
+int LineNumber() const { return m_lineNumber; }
  
- Test.h 
- const char *Name() const { return m_name; }
- }}}
+Test.h 
+const char *Name() const { return m_name; }
+}}}
 
 = CppUnitLite =
  * framework home : http://c2.com/cgi/wiki?CppUnitLite
@@ -30,15 +36,9 @@
  * Add bind code to your project from samples
  * Convert CppUnitLite library to static lib or dynamic dll
  * Fix library codes
- {{{
- TestRegistry.h  
- static Test* Tests() { return instance().tests; } 
- Test.h  
- char* Name() { return name_.asCharString(); }  
- }}}
-
-= BoostTest =
- * compiler.PreprocessorDefinitions need "VUTPP_BOOSTTEST"
- * convert your project to Dynamic Dll
- * Add bind code to your project from samples
- * main suite name must "DefaultSuite" - use '#define BOOST_TEST_MODULE DefaultSuite'
+{{{
+TestRegistry.h  
+static Test* Tests() { return instance().tests; } 
+Test.h  
+char* Name() { return name_.asCharString(); }  
+}}}

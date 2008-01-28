@@ -18,7 +18,7 @@
  * convert your project to Dynamic Dll
  * Add bind code to your project from samples
  * Fix library codes
-{{{
+ {{{
 TestRegistry.h  
 int TestCount() { return m_testCount; }
 Test** Tests() { return m_tests; } 

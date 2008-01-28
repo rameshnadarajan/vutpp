@@ -18,7 +18,8 @@
  * convert your project to Dynamic Dll
  * Add bind code to your project from samples
  * Fix library codes
- {{{
+
+{{{
 TestRegistry.h  
 int TestCount() { return m_testCount; }
 Test** Tests() { return m_tests; } 
@@ -36,6 +37,7 @@ const char *Name() const { return m_name; }
  * Add bind code to your project from samples
  * Convert CppUnitLite library to static lib or dynamic dll
  * Fix library codes
+
 {{{
 TestRegistry.h  
 static Test* Tests() { return instance().tests; } 

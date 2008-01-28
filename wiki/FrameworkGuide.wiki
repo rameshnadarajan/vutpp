@@ -1,5 +1,5 @@
 #summary Framework Guide
-#labels Phase-Implementation,Phase-Deploy
+#labels Phase-Implementation,Phase-Deploy,Featured
 
 = BoostTest =
  * compiler.PreprocessorDefinitions need "VUTPP_BOOSTTEST"

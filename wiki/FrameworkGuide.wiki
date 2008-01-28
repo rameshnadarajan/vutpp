@@ -20,13 +20,12 @@
  * Fix library codes
 
 {{{
-TestRegistry.h  
+- TestRegistry.h
 int TestCount() { return m_testCount; }
 Test** Tests() { return m_tests; } 
-Failure.h 
+- Failure.h 
 int LineNumber() const { return m_lineNumber; }
- 
-Test.h 
+- Test.h 
 const char *Name() const { return m_name; }
 }}}
 
@@ -39,7 +38,7 @@ const char *Name() const { return m_name; }
  * Fix library codes
 
 {{{
-TestRegistry.h  
+- TestRegistry.h  
 static Test* Tests() { return instance().tests; } 
 Test.h  
 char* Name() { return name_.asCharString(); }  

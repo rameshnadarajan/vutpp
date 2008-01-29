@@ -128,7 +128,15 @@ namespace VUTPP
             string rulesPath = exeRoot + "Rules.xml";
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(rulesPath);
+
+            try
+            {
+                doc.Load(rulesPath);
+            }
+            catch (Exception)
+            {
+                System.Windows.Forms.MessageBox.Show(rulesPath, "Load fail");
+            }
 
             foreach (XmlNode ruleNode in doc.DocumentElement.ChildNodes)
             {
@@ -136,7 +144,7 @@ namespace VUTPP
                     continue;
 
                 TestRule rule = new TestRule(ruleNode);
-                m_TestRules.Add(rule.Name.ToUpper(), rule);        
+                m_TestRules.Add(rule.Name.ToUpper(), rule);
             }
         }
 

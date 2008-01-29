@@ -16,7 +16,7 @@ public:
 	void addFailure (const Failure & failure) override { m_CB( failure.message.asCharString(), failure.lineNumber ); }
 };
 
-EXTERN_C __declspec(dllexport) void RunTest( LPCSTR, LPCSTR pTestName, TestFailureCB CB )
+EXTERN_C __declspec(dllexport) void RunTest( HMODULE, LPCSTR, LPCSTR pTestName, TestFailureCB CB )
 {
 	if( pTestName == NULL || CB == NULL )
 	{

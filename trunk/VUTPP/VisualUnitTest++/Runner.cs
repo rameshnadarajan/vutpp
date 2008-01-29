@@ -117,8 +117,8 @@ namespace VUTPP
 
             try
             {
-                Browser.progressBar.Value++; 
-                m_Proc(suitename, testname, this.OnTestFailure);
+                Browser.progressBar.Value++;
+                m_Proc(m_DllInstance, suitename, testname, this.OnTestFailure);
             }
             catch (System.Exception)
             {
@@ -151,7 +151,7 @@ namespace VUTPP
 
         private bool m_bTestFail;
 
-        public delegate void RunTestProc(string suitename, string testname, TestFailureCB CB);
+        public delegate void RunTestProc(IntPtr hModule, string suitename, string testname, TestFailureCB CB);
         public delegate void TestFailureCB(string failure, int line);
 
         [DllImport("VUTPPRunner.dll")]

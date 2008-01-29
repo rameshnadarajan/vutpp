@@ -68,7 +68,7 @@ struct test_runner : test_tree_visitor {
 	bool m_bRun;
 };
 
-EXTERN_C __declspec(dllexport) void RunTest( LPCSTR pSuiteName, LPCSTR pTestName, TestFailureCB CB )
+EXTERN_C __declspec(dllexport) void RunTest( HMODULE, LPCSTR pSuiteName, LPCSTR pTestName, TestFailureCB CB )
 {
 	if( pTestName == NULL || pSuiteName == NULL || CB == NULL )
 	{

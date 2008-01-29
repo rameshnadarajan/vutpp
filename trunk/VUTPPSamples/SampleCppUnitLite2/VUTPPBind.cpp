@@ -16,7 +16,7 @@ public:
 	void AddFailure (const Failure & failure) override { m_CB( failure.Condition(), failure.LineNumber() ); }
 };
 
-EXTERN_C __declspec(dllexport) void RunTest( LPCSTR, LPCSTR pTestName, TestFailureCB CB )
+EXTERN_C __declspec(dllexport) void RunTest( HMODULE, LPCSTR, LPCSTR pTestName, TestFailureCB CB )
 {
 	if( pTestName == NULL || CB == NULL )
 	{

@@ -31,4 +31,10 @@
       <Keyword type="TEST" name="BOOST_AUTO_TEST_CASE_TEMPLATE" nameindex="0"/>
     </KeywordList>
   </Rule>
+  <Rule name="WinUnit" suitetype="NOT_USE">
+    <KeywordList>
+      <Keyword type="TEST" name="BEGIN_TEST" nameindex="0"/>
+      <Keyword type="TEST" name="BEGIN_TESTF" nameindex="0"/>
+    </KeywordList>
+  </Rule>
 </Rules>

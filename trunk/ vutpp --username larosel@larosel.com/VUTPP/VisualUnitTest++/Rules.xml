@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Rules>
+  <Rule name="UnitTest++" suitetype="BRACE">
+    <KeywordList>
+      <Keyword type="SUITE" name="SUITE" nameindex="0"/>
+      <Keyword type="TEST" name="TEST" nameindex="0"/>
+      <Keyword type="TEST" name="TEST_EX" nameindex="0"/>
+      <Keyword type="TEST" name="TEST_FIXTURE" nameindex="1"/>
+      <Keyword type="TEST" name="TEST_FIXTURE_EX" nameindex="1"/>
+    </KeywordList>
+  </Rule>
+  <Rule name="CppUnitLite2" suitetype="NOT_USE">
+    <KeywordList>
+      <Keyword type="TEST" name="TEST" nameindex="0"/>
+      <Keyword type="TEST" name="TEST_F" nameindex="1"/>
+      <Keyword type="TEST" name="TEST_FP" nameindex="2"/>
+    </KeywordList>
+  </Rule>
+  <Rule name="CppUnitLite" suitetype="NOT_USE">
+    <KeywordList>
+      <Keyword type="TEST" name="TEST" nameindex="0"/>
+    </KeywordList>
+  </Rule>
+  <Rule name="BoostTest" suitetype="BEGIN_END">
+    <KeywordList>
+      <Keyword type="SUITE_BEGIN" name="BOOST_AUTO_TEST_SUITE" nameindex="0"/>
+      <Keyword type="SUITE_BEGIN" name="BOOST_FIXTURE_TEST_SUITE" nameindex="0"/>
+      <Keyword type="SUITE_END" name="BOOST_AUTO_TEST_SUITE_END" nameindex="-1"/>
+      <Keyword type="TEST" name="BOOST_AUTO_TEST_CASE" nameindex="0"/>
+      <Keyword type="TEST" name="BOOST_FIXTURE_TEST_CASE" nameindex="0"/>
+      <Keyword type="TEST" name="BOOST_AUTO_TEST_CASE_TEMPLATE" nameindex="0"/>
+    </KeywordList>
+  </Rule>
+</Rules>

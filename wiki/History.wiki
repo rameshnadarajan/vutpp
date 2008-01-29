@@ -13,4 +13,4 @@
 === Version 0.1 (2008/01/04) ===
  * First Release 
 
- * issue 7
+ * issue7

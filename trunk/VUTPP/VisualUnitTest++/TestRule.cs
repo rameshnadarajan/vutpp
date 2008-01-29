@@ -110,7 +110,7 @@ namespace VUTPP
                                     char[] endDefine = { ' ', ';' };
                                     int index2 = projectDefine.IndexOfAny(endDefine);
                                     if (index2 != -1)
-                                        projectDefine.Substring(0, index2);
+                                        projectDefine = projectDefine.Substring(0, index2);
                                     projectDefine = projectDefine.Trim();
 
                                     TestRule rule;

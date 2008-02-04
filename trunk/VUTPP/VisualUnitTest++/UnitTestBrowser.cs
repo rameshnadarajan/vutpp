@@ -57,6 +57,11 @@ namespace VUTPP
                 RunningThread.Abort();
                 RunningThread = null;
             }
+            if (ParseThread != null)
+            {
+                ParseThread.Abort();
+                ParseThread = null;
+            }
             ReleaseProjectEvents();
             ReleaseEvents();
         }
@@ -139,7 +144,7 @@ namespace VUTPP
         #region Variables
         private string ActiveConfigurationName;
         static UnitTestBrowser Browser = null;
-        System.Threading.Thread RunningThread = null;
+        System.Threading.Thread RunningThread = null, ParseThread = null;
         static private bool bRunning = false;
 
         private DTE2 m_dte;			// Reference to the Visual Studio DTE object
@@ -703,6 +708,11 @@ namespace VUTPP
                 RunningThread.Abort();
                 RunningThread = null;
             }
+            if (ParseThread != null)
+            {
+                ParseThread.Abort();
+                ParseThread = null;
+            }
             ReleaseProjectEvents();
             SetRunning(false);
             parseTimer.Stop();
@@ -948,18 +958,30 @@ namespace VUTPP
             }
         }
 
+        delegate void StartTimerCB();
+        private void StartParseTimer()
+        {
+            if (InvokeRequired == true)
+            {
+                this.Invoke(new StartTimerCB(StartParseTimer));
+                return;
+            }
+            parseTimer.Start();
+        }
+
+        private void ThreadFuncParse()
+        {
+            ReparseCurrentFile();
+            StartParseTimer();
+        }
+
         private static void TimerEventProcessor(Object myObject, EventArgs myEventArgs) 
         {
-            lock (myObject)
+            if (ConfigManager.Instance.WatchCurrentFile == true)
             {
-                if (ConfigManager.Instance.WatchCurrentFile == true)
-                {
-                    parseTimer.Stop();
-
-                    Browser.ReparseCurrentFile();
-
-                    parseTimer.Start();
-                }
+                parseTimer.Stop();
+                Browser.ParseThread = new System.Threading.Thread(new System.Threading.ThreadStart(Browser.ThreadFuncParse));
+                Browser.ParseThread.Start();
             }
         }
 

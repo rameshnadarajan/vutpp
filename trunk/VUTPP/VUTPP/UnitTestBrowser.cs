@@ -9,7 +9,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using Microsoft.VisualStudio.CommandBars;
+//using Microsoft.VisualStudio.CommandBars;
 using Microsoft.VisualStudio.VCProject;
 using Microsoft.VisualStudio.VCProjectEngine;
 using Extensibility;
@@ -17,12 +17,15 @@ using EnvDTE;
 using EnvDTE80;
 
 
-namespace VUTPP
+namespace Tnrsoft.VUTPP
 {
     public partial class UnitTestBrowser : UserControl
     {
         public UnitTestBrowser()
         {
+            m_dte = (EnvDTE80.DTE2)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE));
+            InitEvents();
+
             InitializeComponent();
             this.DoubleBuffered = true;
 
@@ -168,20 +171,6 @@ namespace VUTPP
             AUTO,
             USE
         };
-        #endregion
-
-        #region Properties
-        /// <summary>
-        /// Recieves the VS DTE object
-        /// </summary>
-        public DTE2 DTE
-        {
-            set
-            {
-                m_dte = value;
-                InitEvents();
-            }
-        }
         #endregion
 
         public abstract class IParseInput
@@ -410,8 +399,14 @@ namespace VUTPP
             }
         }
 
+        delegate TreeNode AddProjectCB(string projectName, string projectText, TestRule rule);
         private TreeNode AddProject(string projectName, string projectText, TestRule rule)
         {
+            if (TestList.InvokeRequired == true)
+            {
+                return (TreeNode)this.Invoke(new AddProjectCB(AddProject), new object[] { projectName, projectText, rule });
+            }
+
             TreeNode[] nodes = TestList.Nodes.Find(projectName, false);
 
             TreeNode projectNode = null;
@@ -447,7 +442,7 @@ namespace VUTPP
                 TreeNodeTag tag = new TreeNodeTag(TREENODE_TYPE.SUITE, rule.Name);
                 suiteNode.Tag = tag;
 
-                node.Nodes.Add(suiteNode);
+                Add(node.Nodes, suiteNode);
             }
             else
                 suiteNode = nodes[0];
@@ -473,7 +468,7 @@ namespace VUTPP
                 TreeNodeTag tag = new TreeNodeTag( TREENODE_TYPE.TEST, rule.Name, strCode, fileName, lineIndex);
                 testNode.Tag = tag;
 
-                parentNode.Nodes.Add(testNode);
+                Add(parentNode.Nodes, testNode);
             }
             else
                 testNode = nodes[0];
@@ -522,7 +517,7 @@ namespace VUTPP
                             while( projectNode.Parent != null ) projectNode = projectNode.Parent;
                             TreeNode testNode = AddTest(projectNode, parentNode, parseNode.Name, tag.code, tag.file, tag.line, rule);
                             if (parseNode.Checked == true)
-                                TestList.SelectedNode = testNode;
+                                SelectNode(testNode);
                         }
                         break;
                 }
@@ -559,13 +554,57 @@ namespace VUTPP
             }
         }
 
+        delegate void AddNodeCB(TreeNodeCollection nodes, TreeNode node);
+        public void Add(TreeNodeCollection nodes, TreeNode node)
+        {
+            if (TestList.InvokeRequired == true)
+            {
+                this.Invoke(new AddNodeCB(Add), new object[] { nodes, node });
+                return;
+            }
+            nodes.Add(node);
+        }
+
+        delegate void RemoveNodeCB(TreeNodeCollection nodes, TreeNode node);
+        private void Remove(TreeNodeCollection nodes, TreeNode node)
+        {
+            if (TestList.InvokeRequired == true)
+            {
+                this.Invoke(new RemoveNodeCB(Remove), new object[] { nodes, node });
+                return;
+            }
+            nodes.Remove(node);
+        }
+
+        delegate void RemoveNodeAtCB(TreeNodeCollection nodes, int index);
+        private void RemoveAt(TreeNodeCollection nodes, int index)
+        {
+            if (TestList.InvokeRequired == true)
+            {
+                this.Invoke(new RemoveNodeAtCB(RemoveAt), new object[] { nodes, index });
+                return;
+            }
+            nodes.RemoveAt(index);
+        }
+
+        delegate void RemoveNodeByKeyCB(TreeNodeCollection nodes, string key);
+        private void RemoveByKey(TreeNodeCollection nodes, string key)
+        {
+            if (TestList.InvokeRequired == true)
+            {
+                this.Invoke(new RemoveNodeByKeyCB(RemoveByKey), new object[] { nodes, key });
+                return;
+            }
+            nodes.RemoveByKey(key);
+        }
+
         private void ClearEmptySuite(TreeNode projectNode)
         {
             for (int nodeIndex = 0; nodeIndex < projectNode.Nodes.Count; )
             {
                 TreeNodeTag tag = (TreeNodeTag)projectNode.Nodes[nodeIndex].Tag;
                 if (projectNode.Nodes[nodeIndex].Nodes.Count == 0 && tag.type == TREENODE_TYPE.SUITE)
-                    projectNode.Nodes.RemoveAt(nodeIndex);
+                    RemoveAt(projectNode.Nodes, nodeIndex);
                 else
                     nodeIndex++;
             }
@@ -576,7 +615,7 @@ namespace VUTPP
             TestRule rule = TestRule.CheckProject(project);
             if (rule == null)
             {
-                TestList.Nodes.RemoveByKey(project.UniqueName);
+                RemoveByKey( TestList.Nodes, project.UniqueName);
                 return false;
             }
 
@@ -608,7 +647,6 @@ namespace VUTPP
         {
             if (TestList.SelectedNode == null)
                 return;
-
             TreeNodeTag tag = (TreeNodeTag)TestList.SelectedNode.Tag;
             if( tag.file == null )
                 return;
@@ -715,7 +753,7 @@ namespace VUTPP
             }
             ReleaseProjectEvents();
             SetRunning(false);
-            parseTimer.Stop();
+            StopParseTimer();
         }
 
         public void SolutionRenamed(string oldName)
@@ -735,7 +773,7 @@ namespace VUTPP
             if (IsRunning() == true)
                 return;
 
-            TestList.Nodes.RemoveByKey(project.UniqueName);
+            RemoveByKey(TestList.Nodes, project.UniqueName);
         }
 
         public void ProjectRenamed(Project project, string oldName)
@@ -799,7 +837,7 @@ namespace VUTPP
                             TreeNodeTag tag = (TreeNodeTag)child.Tag;
 
                             if (string.Compare(filename, tag.file, true) == 0)
-                                node.Nodes.RemoveAt(childIndex);
+                                RemoveAt(node.Nodes, childIndex);
                             else
                             {
                                 nodes.Enqueue(child);
@@ -890,19 +928,31 @@ namespace VUTPP
                         if( String.Compare( tag.file, filename, true ) == 0 )
                         {
                             if (parseParentNode == null)
-                                parentNode.Nodes.Remove(node);
+                                Remove(parentNode.Nodes, node);
                             else
                             {
                                 TreeNode[] parseNodes = parseParentNode.Nodes.Find(node.Name, false);
-                                if( parseNodes.Length == 0 )
-                                    parentNode.Nodes.Remove(node);
-                                else if( parseNodes[0].Checked )
-                                    TestList.SelectedNode = node;
+                                if (parseNodes.Length == 0)
+                                    Remove(parentNode.Nodes, node);
+                                else if (parseNodes[0].Checked)
+                                    SelectNode(node);
                             }
                         }
                         break;
                 }
             }
+        }
+
+        delegate void SelectNodeCB(TreeNode node);
+
+        private void SelectNode(TreeNode node)
+        {
+            if (TestList.InvokeRequired == true)
+            {
+                this.Invoke(new SelectNodeCB(SelectNode), new object[] { node });
+                return;
+            }
+            TestList.SelectedNode = node;
         }
 
         private void Reparse(ProjectItem projectItem, int selectLine, TestRule rule, USE_DOCUMENT useDocument)
@@ -961,12 +1011,23 @@ namespace VUTPP
         delegate void StartTimerCB();
         private void StartParseTimer()
         {
-            if (InvokeRequired == true)
+            if (this.InvokeRequired == true)
             {
                 this.Invoke(new StartTimerCB(StartParseTimer));
                 return;
             }
             parseTimer.Start();
+        }
+
+        delegate void StopTimerCB();
+        private void StopParseTimer()
+        {
+            if (this.InvokeRequired == true)
+            {
+                this.Invoke(new StopTimerCB(StopParseTimer));
+                return;
+            }
+            parseTimer.Stop();
         }
 
         private void ThreadFuncParse()
@@ -979,7 +1040,7 @@ namespace VUTPP
         {
             if (ConfigManager.Instance.WatchCurrentFile == true)
             {
-                parseTimer.Stop();
+                Browser.StopParseTimer();
                 Browser.ParseThread = new System.Threading.Thread(new System.Threading.ThreadStart(Browser.ThreadFuncParse));
                 Browser.ParseThread.Start();
             }
@@ -996,9 +1057,9 @@ namespace VUTPP
                 return;
 
             if (m_dte.ActiveWindow == null || m_dte.ActiveWindow.ProjectItem == null || TestRule.CheckProject(m_dte.ActiveWindow.Project) == null)
-                parseTimer.Stop();
+                StopParseTimer();
             else
-                parseTimer.Start();
+                StartParseTimer();
         }
 
         // Create a node sorter that implements the IComparer interface.
@@ -1242,7 +1303,7 @@ namespace VUTPP
             if (bRun == true)
             {
                 ActiveConfigurationName = m_dte.Solution.SolutionBuild.ActiveConfiguration.Name;
-                parseTimer.Stop();
+                StopParseTimer();
                 progressBar.StartColor = progressBar.EndColor = Color.LimeGreen;
                 progressBar.Value = 0;
             }

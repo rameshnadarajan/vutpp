@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Microsoft.VisualStudio.VCProject;
 using Microsoft.VisualStudio.VCProjectEngine;
 
-namespace VUTPP
+namespace Tnrsoft.VUTPP
 {
     class Runner
     {
@@ -174,13 +174,6 @@ namespace VUTPP
             if (Browser == null)
                 return;
 
-            if (Browser.TestList.InvokeRequired)
-            {
-                TestFailureCB d = new TestFailureCB(OnTestFailure);
-                Browser.Invoke(d, new object[] { failure, line });
-                return;
-            }
-
             TreeNode[] projectNodes = Browser.TestList.Nodes.Find(projectname, false);
             if (projectNodes.Length == 0)
                 return;
@@ -213,7 +206,7 @@ namespace VUTPP
             UnitTestBrowser.TreeNodeTag tag = new UnitTestBrowser.TreeNodeTag(UnitTestBrowser.TREENODE_TYPE.FAILURE, framework, code.Trim(), filename, line);
             failureNode.Tag = tag;
 
-            testNodes[0].Nodes.Add(failureNode);
+            Browser.Add(testNodes[0].Nodes, failureNode);
 
             testNodes[0].Expand();
         }

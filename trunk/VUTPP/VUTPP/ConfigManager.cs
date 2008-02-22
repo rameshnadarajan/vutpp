@@ -6,7 +6,7 @@ using System.Collections;
 using System.Text;
 using System.Xml;
 
-namespace VUTPP
+namespace Tnrsoft.VUTPP
 {
     class ConfigManager
     {

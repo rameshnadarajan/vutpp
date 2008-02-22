@@ -95,7 +95,7 @@ namespace VistaStyleProgressBar
 				/// <summary>
 				/// The value that is displayed on the progress bar.
 				/// </summary>
-				[Category("Value"), 
+                [Category("Value"), 
 				DefaultValue(0),
 				Description("The value that is displayed on the progress bar.")]
 				public int Value
@@ -103,26 +103,48 @@ namespace VistaStyleProgressBar
 					get { return mValue; }
 					set 
 					{ 
-						if (value > MaxValue || value < MinValue){ return; }
-						mValue = value;
-						if (value > MinValue &&value < MaxValue) {StartTimer();}
-                        else { StopTimer(); }
-						ValueChangedHandler vc = ValueChanged;
-						if (vc != null){vc(this, new System.EventArgs());}
-						this.Invalidate(); 
+                       SetValue( value );
 					}
 				}
 
+                delegate void SetValueCB( int value );
+                void SetValue(int value)
+                {
+                    if (this.InvokeRequired == true)
+                    {
+                        this.Invoke(new SetValueCB(SetValue), new object[] { value });
+                        return;
+                    }
+
+                    if (value > MaxValue || value < MinValue) { return; }
+                    mValue = value;
+                    if (value > MinValue && value < MaxValue) { StartTimer(); }
+                    else { StopTimer(); }
+                    ValueChangedHandler vc = ValueChanged;
+                    if (vc != null) { vc(this, new System.EventArgs()); }
+                    this.DoInvalidate(); 
+                }
+
+                delegate void StartTimerCB();
                 private void StartTimer()
                 {
+                    if (this.InvokeRequired == true)
+                    {
+                        this.Invoke(new StartTimerCB(StartTimer));
+                    }
                     if (mGlowAnimation.Enabled == true)
                         return;
                     Trace.WriteLine("StartTimer");
                     mGlowAnimation.Start();
                 }
 
+                delegate void StopTimerCB();
                 private void StopTimer()
                 {
+                    if (this.InvokeRequired == true)
+                    {
+                        this.Invoke(new StopTimerCB(StopTimer));
+                    }
                     if (mGlowAnimation.Enabled == false)
                         return;
                     Trace.WriteLine("StopTimer");
@@ -148,7 +170,7 @@ namespace VistaStyleProgressBar
                         else { StopTimer(); }
                         MaxChangedHandler mc = MaxChanged;
 						if (mc != null){mc(this, new System.EventArgs());}
-						this.Invalidate(); 
+                        this.DoInvalidate(); 
 					}
 				}
 
@@ -170,7 +192,7 @@ namespace VistaStyleProgressBar
                         else { StopTimer(); }
                         MinChangedHandler mc = MinChanged;
 						if (mc != null){mc(this, new System.EventArgs());}
-						this.Invalidate(); 
+                        this.DoInvalidate(); 
 					}
 				}
 
@@ -196,7 +218,7 @@ namespace VistaStyleProgressBar
 				public Color StartColor
 				{
 					get { return mStartColor; }
-					set { mStartColor = value; this.Invalidate(); }
+                    set { mStartColor = value; this.DoInvalidate(); }
 				}
 
 				private Color mEndColor = Color.FromArgb(0, 211, 40);
@@ -217,7 +239,7 @@ namespace VistaStyleProgressBar
 				public Color EndColor
 				{
 					get { return mEndColor; }
-					set { mEndColor = value; this.Invalidate(); }
+                    set { mEndColor = value; this.DoInvalidate(); }
 				}
 
 			#endregion
@@ -234,7 +256,7 @@ namespace VistaStyleProgressBar
 				public Color HighlightColor
 				{
 					get { return mHighlightColor; }
-					set { mHighlightColor = value; this.Invalidate(); }
+                    set { mHighlightColor = value; this.DoInvalidate(); }
 				}
 
 				private Color mBackgroundColor = Color.FromArgb(201,201,201);
@@ -247,7 +269,7 @@ namespace VistaStyleProgressBar
 				public Color BackgroundColor
 				{
 					get { return mBackgroundColor; }
-					set { mBackgroundColor = value; this.Invalidate(); }
+                    set { mBackgroundColor = value; this.DoInvalidate(); }
 				}
 
 				private bool mAnimate = true;
@@ -263,7 +285,7 @@ namespace VistaStyleProgressBar
 					set {
 							mAnimate = value; 
 							if (value) {StartTimer();} else {StopTimer();}
-							this.Invalidate(); 
+                            this.DoInvalidate(); 
 						}
 				}
 
@@ -277,7 +299,7 @@ namespace VistaStyleProgressBar
 				public Color GlowColor
 				{
 					get { return mGlowColor; }
-					set { mGlowColor = value; this.Invalidate(); }
+                    set { mGlowColor = value; this.DoInvalidate(); }
 				}
 				
 			#endregion
@@ -285,6 +307,17 @@ namespace VistaStyleProgressBar
 		#endregion
 
 		#region -  Drawing  -
+
+            delegate void InvalidateCB();
+            public void DoInvalidate()
+            {
+                if (this.InvokeRequired == true)
+                {
+                    this.Invoke(new InvalidateCB(DoInvalidate), new object[] { });
+                    return;
+                }
+                this.Invalidate();
+            }
 
 			private void DrawBackground(Graphics g)
 			{
@@ -481,9 +514,16 @@ namespace VistaStyleProgressBar
 
 		#region -  Other  -
 
-			private void ProgressBar_Paint(object sender, PaintEventArgs e)
+            delegate void PaintCB(object sender, PaintEventArgs e);
+            private void ProgressBar_Paint(object sender, PaintEventArgs e)
 			{
-				e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                if (this.InvokeRequired == true)
+                {
+                    this.Invoke(new PaintCB(ProgressBar_Paint), new object[] { sender, e });
+                    return;
+                }
+                
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 				e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 				DrawBackground(e.Graphics);
 				DrawBackgroundShadows(e.Graphics);
@@ -506,7 +546,7 @@ namespace VistaStyleProgressBar
 					{
 						mGlowPosition = -300;
 					}
-					this.Invalidate();
+					this.DoInvalidate();
 				}
 				else
 				{

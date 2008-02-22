@@ -2,7 +2,7 @@
 using EnvDTE;
 using EnvDTE80;
 
-namespace VUTPP
+namespace Tnrsoft.VUTPP
 {
     partial class UnitTestBrowser
     {
@@ -36,6 +36,7 @@ namespace VUTPP
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnitTestBrowser));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Tests = new System.Windows.Forms.TabPage();
+            this.progressBar = new VistaStyleProgressBar.ProgressBar();
             this.Stop = new System.Windows.Forms.Button();
             this.RunSelected = new System.Windows.Forms.Button();
             this.RunAll = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@ namespace VUTPP
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.progressBar = new VistaStyleProgressBar.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.Tests.SuspendLayout();
             this.Config.SuspendLayout();
@@ -91,6 +91,19 @@ namespace VUTPP
             this.Tests.Size = new System.Drawing.Size(367, 519);
             this.Tests.TabIndex = 0;
             this.Tests.Text = "Tests";
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.BackColor = System.Drawing.Color.White;
+            this.progressBar.EndColor = System.Drawing.Color.LimeGreen;
+            this.progressBar.Location = new System.Drawing.Point(1, 29);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(363, 23);
+            this.progressBar.StartColor = System.Drawing.Color.LimeGreen;
+            this.progressBar.TabIndex = 5;
+            this.progressBar.Value = 50;
             // 
             // Stop
             // 
@@ -333,10 +346,10 @@ namespace VUTPP
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(94, 38);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(163, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(170, 12);
             this.linkLabel1.TabIndex = 1;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://vutpp.springnote.com";
+            this.linkLabel1.Text = "http://vutpp.googlecode.com";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
@@ -344,22 +357,9 @@ namespace VUTPP
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 12);
+            this.label1.Size = new System.Drawing.Size(118, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "VisualUnitTest++ beta 0.1";
-            // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.BackColor = System.Drawing.Color.White;
-            this.progressBar.EndColor = System.Drawing.Color.LimeGreen;
-            this.progressBar.Location = new System.Drawing.Point(1, 29);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(363, 23);
-            this.progressBar.StartColor = System.Drawing.Color.LimeGreen;
-            this.progressBar.TabIndex = 5;
-            this.progressBar.Value = 50;
+            this.label1.Text = "VisualUnitTest++ 0.5";
             // 
             // UnitTestBrowser
             // 

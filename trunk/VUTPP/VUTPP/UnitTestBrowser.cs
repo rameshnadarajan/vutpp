@@ -17,7 +17,7 @@ using EnvDTE;
 using EnvDTE80;
 
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     public partial class UnitTestBrowser : UserControl
     {

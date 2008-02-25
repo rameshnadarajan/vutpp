@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -33,18 +33,19 @@ namespace Tnrsoft.VUTPP
     [DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0")]
     // This attribute is used to register the informations needed to show the this package
     // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration(false, "#110", "#112", "1.0", IconResourceID = 400)]
+    [InstalledProductRegistration(true, null, null, null)]
+    //[InstalledProductRegistration(false, "#110", "#112", "1.0", IconResourceID = 400)]
     // In order be loaded inside Visual Studio in a machine that has not the VS SDK installed, 
     // package needs to have a valid load key (it can be requested at 
     // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
     // package has a load key embedded in its resources.
-    [ProvideLoadKey("Standard", "1.0", "VUTPP", "Tnrsoft", 1)]
+    [ProvideLoadKey("Standard", "1.0", "VisualUnitTest++", "larosel", 104)]
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource(1000, 1)]
     // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(MyToolWindow))]
     [Guid(GuidList.guidVUTPPPkgString)]
-    public sealed class VUTPPPackage : Package
+    public sealed class VUTPPPackage : Package, IVsInstalledProduct
     {
         /// <summary>
         /// Default constructor of the package.
@@ -103,6 +104,11 @@ namespace Tnrsoft.VUTPP
                 CommandID toolwndCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidVUTPPTool);
                 MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
                 mcs.AddCommand( menuToolWin );
+
+                // Create the command for etc
+                CommandID runallCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunAll);
+                MenuCommand menuRunAll = new MenuCommand(MenuItemCallback, runallCommandID);
+                mcs.AddCommand(menuRunAll);
             }
         }
         #endregion
@@ -132,5 +138,35 @@ namespace Tnrsoft.VUTPP
                        out result));
         }
 
+
+        #region IVsInstalledProduct Members
+
+        public int IdBmpSplash(out uint pIdBmp)
+        {
+            pIdBmp = 500;
+            return Microsoft.VisualStudio.VSConstants.S_OK;
+        }
+        public int IdIcoLogoForAboutbox(out uint pIdIco)
+        {
+            pIdIco = 600;
+            return Microsoft.VisualStudio.VSConstants.S_OK;
+        }
+        public int OfficialName(out string pbstrName)
+        {
+            pbstrName = "VisualUnitTest++";
+            return Microsoft.VisualStudio.VSConstants.S_OK;
+        }
+        public int ProductDetails(out string pbstrProductDetails)
+        {
+            pbstrProductDetails = Resources.ToolWindowTitle + "\r\nFor more information about VisualUnitTest++, see the website at http://vutpp.googlecode.com.";
+            return Microsoft.VisualStudio.VSConstants.S_OK;
+        }
+        public int ProductID(out string pbstrPID)
+        {
+            pbstrPID = "VUTPP";
+            return Microsoft.VisualStudio.VSConstants.S_OK;
+        } 
+
+        #endregion
     }
 }

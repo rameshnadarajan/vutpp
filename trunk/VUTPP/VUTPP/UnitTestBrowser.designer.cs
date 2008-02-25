@@ -2,7 +2,7 @@
 using EnvDTE;
 using EnvDTE80;
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     partial class UnitTestBrowser
     {

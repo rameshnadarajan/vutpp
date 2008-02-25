@@ -6,7 +6,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tnrsoft.VUTPP</RootNamespace>
+    <RootNamespace>larosel.VUTPP</RootNamespace>
     <AssemblyName>VUTPP</AssemblyName>
     <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
@@ -128,6 +128,7 @@
     <None Include="Resources\Images_24bit.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Package.bmp" />
     <Content Include="Resources\Package.ico" />
     <Content Include="Rules.xml" />
   </ItemGroup>

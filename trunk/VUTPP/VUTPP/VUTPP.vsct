@@ -89,6 +89,14 @@
         </Strings>
       </Button>
 
+      <Button guid="guidVUTPPCmdSet" id="cmdidRunAll" priority="0x0100" type="Button">
+        <Parent guid="guidVUTPPCmdSet" id="MySubMenuGroup"/>
+        <Strings>
+          <CommandName>cmdidRunAll</CommandName>
+          <ButtonText>Run All</ButtonText>
+        </Strings>
+      </Button>
+
 
     </Buttons>
    
@@ -123,6 +131,7 @@
       <IDSymbol name="MySubMenuGroup" value="0x1022" />
       <IDSymbol name="cmdidVUTPP" value="0x0100" />
       <IDSymbol name="cmdidVUTPPTool" value="0x0101" />
+      <IDSymbol name="cmdidRunAll" value="0x0102" />
     </GuidSymbol>
     
     

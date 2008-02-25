@@ -5,7 +5,7 @@ using System.Xml;
 using Microsoft.VisualStudio.VCProject;
 using Microsoft.VisualStudio.VCProjectEngine;
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     enum TESTKEYWORD_TYPE
     {

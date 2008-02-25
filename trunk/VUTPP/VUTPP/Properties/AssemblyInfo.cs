@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("VUTPP")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Tnrsoft")]
+[assembly: AssemblyCompany("larosel")]
 [assembly: AssemblyProduct("VUTPP")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

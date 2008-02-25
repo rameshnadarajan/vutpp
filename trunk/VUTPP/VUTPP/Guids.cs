@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     static class GuidList
     {

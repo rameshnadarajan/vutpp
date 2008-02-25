@@ -6,7 +6,7 @@ using System.Collections;
 using System.Text;
 using System.Xml;
 
-namespace Tnrsoft.VUTPP
+namespace larosel.VUTPP
 {
     class ConfigManager
     {

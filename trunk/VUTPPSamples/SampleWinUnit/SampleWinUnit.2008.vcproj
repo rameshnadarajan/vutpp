@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="SampleWinUnit"
+	Name="SampleWinUnit.2008"
 	ProjectGUID="{8D6300BF-3DDD-40B5-A21B-5CFF98669EEE}"
 	RootNamespace="SampleWinUnit"
 	Keyword="Win32Proj"

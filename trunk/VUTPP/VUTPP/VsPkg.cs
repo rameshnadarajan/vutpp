@@ -30,11 +30,11 @@ namespace larosel.VUTPP
     // when you debug your package you want to register it in the experimental hive. This
     // attribute specifies the registry root to use if no one is provided to regpkg.exe with
     // the /root switch.
-    [DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\9.0")]
+    [DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\8.0")]
     // This attribute is used to register the informations needed to show the this package
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration(true, null, null, null)]
-    //[InstalledProductRegistration(false, "#110", "#112", "1.0", IconResourceID = 400)]
+//    [InstalledProductRegistration(false, "#110", "#112", "1.0", IconResourceID = 400)]
     // In order be loaded inside Visual Studio in a machine that has not the VS SDK installed, 
     // package needs to have a valid load key (it can be requested at 
     // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
@@ -45,8 +45,10 @@ namespace larosel.VUTPP
     // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(MyToolWindow))]
     [Guid(GuidList.guidVUTPPPkgString)]
-    public sealed class VUTPPPackage : Package, IVsInstalledProduct
+    public sealed class VUTPP : Package, IVsInstalledProduct
     {
+        const int bitmapResourceID = 300;
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -54,7 +56,7 @@ namespace larosel.VUTPP
         /// not sited yet inside Visual Studio environment. The place to do all the other 
         /// initialization is the Initialize method.
         /// </summary>
-        public VUTPPPackage()
+        public VUTPP()
         {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
         }
@@ -72,7 +74,7 @@ namespace larosel.VUTPP
             ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
-                throw new NotSupportedException(Resources.CanNotCreateWindow);
+                throw new COMException(Resources.CanNotCreateWindow);
             }
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
@@ -92,23 +94,14 @@ namespace larosel.VUTPP
             Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
-            // Add our command handlers for menu (commands must exist in the .vsct file)
+            // Add our command handlers for menu (commands must exist in the .ctc file)
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if ( null != mcs )
             {
-                // Create the command for the menu item.
-                CommandID menuCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidVUTPP);
-                MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID );
-                mcs.AddCommand( menuItem );
                 // Create the command for the tool window
-                CommandID toolwndCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidVUTPPTool);
-                MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
+                CommandID toolwndCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidUnitTestBrowser);
+                MenuCommand menuToolWin = new MenuCommand( new EventHandler(ShowToolWindow), toolwndCommandID);
                 mcs.AddCommand( menuToolWin );
-
-                // Create the command for etc
-                CommandID runallCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunAll);
-                MenuCommand menuRunAll = new MenuCommand(MenuItemCallback, runallCommandID);
-                mcs.AddCommand(menuRunAll);
             }
         }
         #endregion
@@ -124,7 +117,7 @@ namespace larosel.VUTPP
             IVsUIShell uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
             Guid clsid = Guid.Empty;
             int result;
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
+            uiShell.ShowMessageBox(
                        0,
                        ref clsid,
                        "VUTPP",
@@ -135,11 +128,11 @@ namespace larosel.VUTPP
                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
                        OLEMSGICON.OLEMSGICON_INFO,
                        0,        // false
-                       out result));
+                       out result);
         }
 
 
-        #region IVsInstalledProduct Members
+        #region IVsInstalledProduct 멤버
 
         public int IdBmpSplash(out uint pIdBmp)
         {
@@ -158,7 +151,7 @@ namespace larosel.VUTPP
         }
         public int ProductDetails(out string pbstrProductDetails)
         {
-            pbstrProductDetails = Resources.ToolWindowTitle + "\r\nFor more information about VisualUnitTest++, see the website at http://vutpp.googlecode.com.";
+            pbstrProductDetails = Resources.ToolWindowTitle + "\r\n" + Resources.ProductDetail;
             return Microsoft.VisualStudio.VSConstants.S_OK;
         }
         public int ProductID(out string pbstrPID)

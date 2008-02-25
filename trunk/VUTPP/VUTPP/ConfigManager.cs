@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 using System.Xml;
+using Microsoft.Win32;
 
 namespace larosel.VUTPP
 {
     class ConfigManager
     {
         #region Singleton Pattern
-        private Configuration currentConfig = null;
         private static volatile ConfigManager m_instance;
         private static object m_syncRoot = new object();
 
@@ -63,35 +63,22 @@ namespace larosel.VUTPP
 
         private string ReadValue(string key, object defaultValue)
         {
-            if (currentConfig != null)
-            {
-                if (currentConfig.AppSettings.Settings[key] == null)
-                {
-                    currentConfig.AppSettings.Settings.Add(key, defaultValue.ToString());
-                    currentConfig.Save();
-                }
-                
-                return currentConfig.AppSettings.Settings[key].Value;
-            }
-            return defaultValue.ToString();
+            RegistryKey reg = Registry.CurrentUser;
+            reg = reg.OpenSubKey(@"Software\VisualUnitTest++", true);
+            if (reg == null)
+                return defaultValue.ToString();
+            return Convert.ToString(reg.GetValue(key, defaultValue));
         }
 
         private void WriteValue(string key, object value)
         {
-            if (currentConfig != null)
-            {
-                if (currentConfig.AppSettings.Settings[key] == null)
-                    currentConfig.AppSettings.Settings.Add(key, value.ToString());
-                else
-                    currentConfig.AppSettings.Settings[key].Value = value.ToString();
-                currentConfig.Save();
-            }
+            RegistryKey reg = Registry.CurrentUser;
+            reg = reg.CreateSubKey(@"Software\VisualUnitTest++", RegistryKeyPermissionCheck.ReadWriteSubTree);
+            reg.SetValue(key, value.ToString());
+            reg.Close();
         }
         ConfigManager()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string exePath = asm.Location;
-            currentConfig = ConfigurationManager.OpenExeConfiguration(exePath);
         }
 
         public static ConfigManager Instance

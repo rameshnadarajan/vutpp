@@ -19,7 +19,7 @@ namespace larosel.VUTPP
     /// This class derives from the ToolWindowPane class provided from the MPF in order to use its 
     /// implementation of the IVsWindowPane interface.
     /// </summary>
-    [Guid("68c8acd0-029b-4d1d-ba79-bb84edcca834")]
+    [Guid("2e904cef-a2d5-40a0-b5e0-32377cfff2e9")]
     public class MyToolWindow : ToolWindowPane
     {
         // This is the user control hosted by the tool window; it is exposed to the base class 

@@ -12,18 +12,18 @@ using System.Diagnostics;
 //using Microsoft.VisualStudio.CommandBars;
 using Microsoft.VisualStudio.VCProject;
 using Microsoft.VisualStudio.VCProjectEngine;
-using Extensibility;
 using EnvDTE;
-using EnvDTE80;
 
 
 namespace larosel.VUTPP
 {
     public partial class UnitTestBrowser : UserControl
     {
+        public string vsSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
+
         public UnitTestBrowser()
         {
-            m_dte = (EnvDTE80.DTE2)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE));
+            m_dte = (EnvDTE.DTE)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE));
             InitEvents();
 
             InitializeComponent();
@@ -79,7 +79,7 @@ namespace larosel.VUTPP
 
         public struct TreeNodeTag
         {
-            public TreeNodeTag(VUTPP.UnitTestBrowser.TREENODE_TYPE vType, string vFramework)
+            public TreeNodeTag(larosel.VUTPP.UnitTestBrowser.TREENODE_TYPE vType, string vFramework)
             {
                 type = vType;
                 framework = vFramework;
@@ -87,7 +87,7 @@ namespace larosel.VUTPP
                 code = null;
                 line = -1;
             }
-            public TreeNodeTag(VUTPP.UnitTestBrowser.TREENODE_TYPE vType, string vFramework, string vCode, string vFile, int vLine)
+            public TreeNodeTag(larosel.VUTPP.UnitTestBrowser.TREENODE_TYPE vType, string vFramework, string vCode, string vFile, int vLine)
             {
                 type = vType;
                 framework = vFramework;
@@ -150,7 +150,7 @@ namespace larosel.VUTPP
         System.Threading.Thread RunningThread = null, ParseThread = null;
         static private bool bRunning = false;
 
-        private DTE2 m_dte;			// Reference to the Visual Studio DTE object
+        private DTE m_dte;			// Reference to the Visual Studio DTE object
         private VCProjectEngineEvents vcprojectEvents = null;
         private SolutionEvents solutionEvents;
         private WindowEvents windowEvents;
@@ -538,14 +538,42 @@ namespace larosel.VUTPP
             }
         }
 
+        private ArrayList GetProjectList()
+        {
+            ArrayList projectList = new ArrayList();
+
+            if (m_dte.Solution.IsOpen)
+            {
+                foreach (Project project in m_dte.Solution.Projects)
+                {
+                    GetProjectListRecursive(ref projectList, project);
+                }
+            }
+            return projectList;
+        }
+
+        private void GetProjectListRecursive(ref ArrayList projectList, Project project)
+        {
+            if (project.Kind == vcContextGuids.vcContextGuidVCProject)
+                projectList.Add(project);
+            else if (project.Kind == vsSolutionFolder)
+            {
+                foreach (ProjectItem projectItem in project.ProjectItems)
+                {
+                    if (projectItem.SubProject != null)
+                        GetProjectListRecursive(ref projectList, projectItem.SubProject);
+                }
+            }
+        }
+
         public void DoRefreshTestList( bool bReparse )
         {
             TestList.Nodes.Clear();
-			Solution2 solution = (Solution2)m_dte.Solution;
-            if (solution.IsOpen)
+            if (m_dte.Solution.IsOpen)
             {
                 InitProjectEvents();
-                foreach (Project project in solution.Projects)
+                ArrayList projectList = GetProjectList();
+                foreach (Project project in projectList)
                 {
                     RefreshProject(project, false);
                 }
@@ -694,13 +722,17 @@ namespace larosel.VUTPP
         {
             if (vcprojectEvents == null && m_dte.Solution.IsOpen == true)
             {
-                VCProjectItem item = (VCProjectItem)m_dte.Solution.Projects.Item(1).Object;
-                VCProjectEngine projEngine = (VCProjectEngine)item.VCProjectEngine;
+                ArrayList projectList = GetProjectList();
+                if (projectList.Count > 0)
+                {
+                    VCProjectItem item = (VCProjectItem)((Project)projectList[0]).Object;
+                    VCProjectEngine projEngine = (VCProjectEngine)item.VCProjectEngine;
 
-                vcprojectEvents = (VCProjectEngineEvents)projEngine.Events;
-                vcprojectEvents.ItemAdded += new _dispVCProjectEngineEvents_ItemAddedEventHandler(this.ItemAdded);
-                vcprojectEvents.ItemRemoved += new _dispVCProjectEngineEvents_ItemRemovedEventHandler(this.ItemRemoved);
-                vcprojectEvents.ItemRenamed += new _dispVCProjectEngineEvents_ItemRenamedEventHandler(this.ItemRenamed);
+                    vcprojectEvents = (VCProjectEngineEvents)projEngine.Events;
+                    vcprojectEvents.ItemAdded += new _dispVCProjectEngineEvents_ItemAddedEventHandler(this.ItemAdded);
+                    vcprojectEvents.ItemRemoved += new _dispVCProjectEngineEvents_ItemRemovedEventHandler(this.ItemRemoved);
+                    vcprojectEvents.ItemRenamed += new _dispVCProjectEngineEvents_ItemRenamedEventHandler(this.ItemRenamed);
+                }
             }
         }
 
@@ -1142,10 +1174,10 @@ namespace larosel.VUTPP
                 TreeNode projectNode = node;
                 while (projectNode.Parent != null) projectNode = projectNode.Parent;
 
-		        Solution2 solution = (Solution2)m_dte.Solution;
-                if (solution.IsOpen)
+                if (m_dte.Solution.IsOpen)
                 {
-                    foreach (Project project in solution.Projects)
+                    ArrayList projectList = GetProjectList();
+                    foreach (Project project in projectList)
                     {
                         if (project.UniqueName == projectNode.Name)
                         {
@@ -1191,13 +1223,13 @@ namespace larosel.VUTPP
             BuildList.Clear();
             RunList.Clear();
 
-            Solution2 solution = (Solution2)m_dte.Solution;
-            if (solution.IsOpen)
+            if (m_dte.Solution.IsOpen)
             {
                 LevelCount levelCount = new LevelCount();
                 foreach (TreeNode projectNode in TestList.Nodes)
                 {
-                    foreach (Project project in solution.Projects)
+                    ArrayList projectList = GetProjectList();
+                    foreach (Project project in projectList)
                     {
                         if (project.UniqueName == projectNode.Name)
                         {
@@ -1250,10 +1282,10 @@ namespace larosel.VUTPP
             BuildList.Clear();
             RunList.Clear();
 
-            Solution2 solution = (Solution2)m_dte.Solution;
-            if (solution.IsOpen)
+            if (m_dte.Solution.IsOpen)
             {
-                foreach (Project project in solution.Projects)
+                ArrayList projectList = GetProjectList();
+                foreach (Project project in projectList)
                 {
                     if (project.UniqueName == projectNode.Name)
                     {
@@ -1360,7 +1392,8 @@ namespace larosel.VUTPP
                 else
                     bFirstBuild = false;
 
-                foreach (Project project in m_dte.Solution.Projects)
+                ArrayList projectList = GetProjectList();
+                foreach (Project project in projectList)
                 {
                     if (project.UniqueName == projectName)
                     {
@@ -1411,7 +1444,8 @@ namespace larosel.VUTPP
                     {
                         if (projectNode.Name == runner.ProjectName)
                         {
-                            foreach (Project project in solution.Projects)
+                            ArrayList projectList = GetProjectList();
+                            foreach (Project project in projectList)
                             {
                                 if (project.UniqueName == runner.ProjectName)
                                 {

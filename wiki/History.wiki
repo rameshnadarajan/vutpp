@@ -8,7 +8,7 @@
  * Suite의 Icon 키 세팅이 되지 않아서 Run할 때 죽는 버그 수정
  * 실행중에 ActiveConfiguration을 변경하는 경우 죽는 버그 수정
  * RunTest의 return value가 정상적이지 않은 경우가 있어서 TestFailureCallback으로 feedback하도록 BindCode수정
- * boost auto test지원 추가 - 정대원(all2one)님께서 도와주셨습니다. 
+ * boost auto test지원 추가 - 정재원(all2one)님께서 도와주셨습니다. 
 
 === Version 0.1 (2008/01/04) ===
  * First Release 

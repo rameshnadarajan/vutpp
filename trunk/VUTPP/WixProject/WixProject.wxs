@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="af064b02-affc-454b-bf9b-91432e10941b" Name="VisualUnitTest++" Language="1033" Version="1.0.0.0" Manufacturer="larosel" UpgradeCode="b00a267e-94ef-4777-9fc4-ff16ff31d0ec">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="WixProject.cab" EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="VisualUnitTest++">
+
+          <Component Id="ProductComponent" Guid="70df4c9c-8a05-49e5-b467-9988fd50418f">
+            <!-- TODO: Insert your files, registry keys, and other resources here. -->
+            <File Id="MainDll" Name="VisualUnitTest++.dll" Source="..\bin\Release\VisualUnitTest++.dll" Vital="yes" DiskId="1"/>
+            <File Id="Rules" Name="Rules.xml" Source="..\VUTPP\Rules.xml" Vital="yes" DiskId="1"/>
+            <?include Registry2005.wxi ?>
+            <?include Registry2008.wxi ?>
+          </Component>
+
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UIRef Id="WixUI_InstallDir" />
+    
+    <Feature Id="ProductFeature" Level="1">
+      <ComponentRef Id="ProductComponent" />
+    </Feature>
+
+    <Property Id="DEVENV_EXE_2005">
+      <RegistrySearch Id="RegSearch_DevenvExe_2005" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\8.0\Setup\VS" Name="EnvironmentPath" Type="raw" />
+    </Property>
+    <CustomAction Id="CA_DevenvSetup2005" Property="DEVENV_EXE_2005" ExeCommand="/setup" Impersonate="no" Execute="deferred"/>
+
+    <Property Id="DEVENV_EXE_2008">
+      <RegistrySearch Id="RegSearch_DevenvExe_2008" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS" Name="EnvironmentPath" Type="raw" />
+    </Property>
+    <CustomAction Id="CA_DevenvSetup2008" Property="DEVENV_EXE_2008" ExeCommand="/setup /nosetupvstemplates" Impersonate="no" Execute="deferred"/>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallValidate" />
+      <Custom Action="CA_DevenvSetup2005" Before="InstallFinalize" />
+      <Custom Action="CA_DevenvSetup2008" Before="InstallFinalize" />
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

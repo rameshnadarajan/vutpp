@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VUTPP", "VUTPP\VUTPP.csproj", "{E5569D07-4D25-4C13-9994-EE129B6F8F2E}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{8D5B8CCE-7F9D-466A-931F-4D90C2633E9E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessDevEnv", "ProcessDevEnv\ProcessDevEnv.csproj", "{21B51FC0-9E63-456E-B34D-251D0EEF1726}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "WixProject", "WixProject\WixProject.wixproj", "{0F7A0059-F14A-43E6-B2FE-790053B4DA76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +15,10 @@ Global
 		{E5569D07-4D25-4C13-9994-EE129B6F8F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5569D07-4D25-4C13-9994-EE129B6F8F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5569D07-4D25-4C13-9994-EE129B6F8F2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D5B8CCE-7F9D-466A-931F-4D90C2633E9E}.Debug|Any CPU.ActiveCfg = Debug
-		{8D5B8CCE-7F9D-466A-931F-4D90C2633E9E}.Release|Any CPU.ActiveCfg = Release
-		{21B51FC0-9E63-456E-B34D-251D0EEF1726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21B51FC0-9E63-456E-B34D-251D0EEF1726}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21B51FC0-9E63-456E-B34D-251D0EEF1726}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21B51FC0-9E63-456E-B34D-251D0EEF1726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7A0059-F14A-43E6-B2FE-790053B4DA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7A0059-F14A-43E6-B2FE-790053B4DA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7A0059-F14A-43E6-B2FE-790053B4DA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7A0059-F14A-43E6-B2FE-790053B4DA76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

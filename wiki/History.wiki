@@ -10,6 +10,7 @@
  * convert project to VSPackage
  * Improve ReparseCurrentFile(for Navigate and Update List) to use thread
  * Add MenuBar
+ * change bind codes
 
 === Version 0.2 (2008/01/15) ===
  * Vista가 아닌 OS에서 Icon이 제대로 나오지 않는 버그 수정(Shell32.dll의 아이콘을 사용하도록 했는데 OS별로 아이콘내용이 달라서 생기는 문제였음, famfamfam.com의 무료아이콘을 포함하도록 변경)

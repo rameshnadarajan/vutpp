@@ -34,12 +34,16 @@ namespace larosel.VUTPP
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnitTestBrowser));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Tests = new System.Windows.Forms.TabPage();
-            this.progressBar = new VistaStyleProgressBar.ProgressBar();
             this.Stop = new System.Windows.Forms.Button();
             this.RunSelected = new System.Windows.Forms.Button();
             this.RunAll = new System.Windows.Forms.Button();
             this.RefreshTestList = new System.Windows.Forms.Button();
             this.TestList = new System.Windows.Forms.TreeView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshTestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.Config = new System.Windows.Forms.TabPage();
             this.ReparseTick = new System.Windows.Forms.NumericUpDown();
@@ -55,8 +59,10 @@ namespace larosel.VUTPP
             this.label2 = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.progressBar = new VistaStyleProgressBar.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.Tests.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.Config.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReparseTick)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -89,19 +95,6 @@ namespace larosel.VUTPP
             this.Tests.TabIndex = 0;
             this.Tests.Text = "Tests";
             // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.BackColor = System.Drawing.Color.White;
-            this.progressBar.EndColor = System.Drawing.Color.LimeGreen;
-            this.progressBar.Location = new System.Drawing.Point(1, 29);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(363, 23);
-            this.progressBar.StartColor = System.Drawing.Color.LimeGreen;
-            this.progressBar.TabIndex = 5;
-            this.progressBar.Value = 50;
-            // 
             // Stop
             // 
             this.Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -113,6 +106,7 @@ namespace larosel.VUTPP
             this.Stop.Text = "Stop";
             this.Stop.UseVisualStyleBackColor = true;
             this.Stop.Click += new System.EventHandler(this.Stop_Click);
+            this.Stop.EnabledChanged += new System.EventHandler(this.Stop_EnabledChanged);
             // 
             // RunSelected
             // 
@@ -123,6 +117,7 @@ namespace larosel.VUTPP
             this.RunSelected.Text = "Run Selected";
             this.RunSelected.UseVisualStyleBackColor = true;
             this.RunSelected.Click += new System.EventHandler(this.RunSelected_Click);
+            this.RunSelected.EnabledChanged += new System.EventHandler(this.RunSelected_EnabledChanged);
             // 
             // RunAll
             // 
@@ -133,6 +128,7 @@ namespace larosel.VUTPP
             this.RunAll.Text = "Run All";
             this.RunAll.UseVisualStyleBackColor = true;
             this.RunAll.Click += new System.EventHandler(this.RunAll_Click);
+            this.RunAll.EnabledChanged += new System.EventHandler(this.RunAll_EnabledChanged);
             // 
             // RefreshTestList
             // 
@@ -144,6 +140,7 @@ namespace larosel.VUTPP
             this.RefreshTestList.Text = "Refresh Tests";
             this.RefreshTestList.UseVisualStyleBackColor = true;
             this.RefreshTestList.Click += new System.EventHandler(this.RefreshTestList_Click);
+            this.RefreshTestList.EnabledChanged += new System.EventHandler(this.RefreshTestList_EnabledChanged);
             // 
             // TestList
             // 
@@ -163,6 +160,42 @@ namespace larosel.VUTPP
             this.TestList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TestList_AfterSelect);
             this.TestList.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TestList_BeforeSelect);
             this.TestList.MouseLeave += new System.EventHandler(this.TestList_MouseLeave);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runToolStripMenuItem,
+            this.debugToolStripMenuItem,
+            this.stopToolStripMenuItem,
+            this.refreshTestsToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(144, 92);
+            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.runToolStripMenuItem.Text = "Run";
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.stopToolStripMenuItem.Text = "Stop";
+            // 
+            // refreshTestsToolStripMenuItem
+            // 
+            this.refreshTestsToolStripMenuItem.Name = "refreshTestsToolStripMenuItem";
+            this.refreshTestsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.refreshTestsToolStripMenuItem.Text = "Refresh Tests";
             // 
             // imageList1
             // 
@@ -350,6 +383,19 @@ namespace larosel.VUTPP
             this.linkLabel1.Text = "http://vutpp.googlecode.com";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.BackColor = System.Drawing.Color.White;
+            this.progressBar.EndColor = System.Drawing.Color.LimeGreen;
+            this.progressBar.Location = new System.Drawing.Point(1, 29);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(363, 23);
+            this.progressBar.StartColor = System.Drawing.Color.LimeGreen;
+            this.progressBar.TabIndex = 5;
+            this.progressBar.Value = 50;
+            // 
             // UnitTestBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -359,6 +405,7 @@ namespace larosel.VUTPP
             this.Size = new System.Drawing.Size(375, 545);
             this.tabControl1.ResumeLayout(false);
             this.Tests.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.Config.ResumeLayout(false);
             this.Config.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReparseTick)).EndInit();
@@ -370,9 +417,9 @@ namespace larosel.VUTPP
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage Tests;
-        private System.Windows.Forms.TabPage Config;
+        public System.Windows.Forms.TabControl tabControl1;
+        public System.Windows.Forms.TabPage Tests;
+        public System.Windows.Forms.TabPage Config;
         public System.Windows.Forms.Button RefreshTestList;
         public System.Windows.Forms.TreeView TestList;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -393,6 +440,11 @@ namespace larosel.VUTPP
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshTestsToolStripMenuItem;
 
     }
 }

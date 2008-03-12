@@ -58,7 +58,7 @@ CMDS_SECTION guidVUTPPPkg
   // a menu type, a name and a default text.
 
   // NewMenu                              Relative to Group                       Priority    Type        Name                    Text
-    guidVUTPPCmdSet:VUTPPMenu,    guidVUTPPCmdSet:VSMenu,    0x0000, , "VUTPP";
+    guidVUTPPCmdSet:VUTPPMenu,    guidVUTPPCmdSet:VSMenu,    0x0000, , "VUTPP(&U)";
 
 
 
@@ -72,6 +72,8 @@ CMDS_SECTION guidVUTPPPkg
   // NewGroup                              Parent Group                            Priority
   guidVUTPPCmdSet:VSMenu,    guidSHLMainMenu:IDM_VS_TOOL_MAINMENU,    0x0600;
   guidVUTPPCmdSet:VUTPPGroup,    guidVUTPPCmdSet:VUTPPMenu,    0x0600;
+  guidVUTPPCmdSet:RunGroup,    guidVUTPPCmdSet:VUTPPMenu,    0x0600;
+  guidVUTPPCmdSet:EtcGroup,    guidVUTPPCmdSet:VUTPPMenu,    0x0600;
   NEWGROUPS_END
 
   // Button section.
@@ -87,7 +89,14 @@ CMDS_SECTION guidVUTPPPkg
   // If you do not want an image next to your command, set the image to "guidOfficeIcon:msotcidNoIcon"
 
   // Command                    Parent Group                Priority    Image            Type    Visibility        
-    guidVUTPPCmdSet:cmdidUnitTestBrowser,    guidVUTPPCmdSet:VUTPPGroup,    0x0100,        guidVUTPPCmdSet:bmpPic1,    BUTTON,    ,            "UnitTestBrowser";
+    guidVUTPPCmdSet:cmdidUnitTestBrowser,    guidVUTPPCmdSet:VUTPPGroup,    0x0100,        guidVUTPPCmdSet:bmpPic1,    BUTTON,    ,            "UnitTestBrowser(&U)";
+    guidVUTPPCmdSet:cmdidConfig,    guidVUTPPCmdSet:VUTPPGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY   ,            "Config(&C)";
+    guidVUTPPCmdSet:cmdidRunAll,    guidVUTPPCmdSet:RunGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY   ,            "Run All(&A)";
+    guidVUTPPCmdSet:cmdidRunSelected,    guidVUTPPCmdSet:RunGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY   ,       "Run Selected(&R)";
+    guidVUTPPCmdSet:cmdidDebugProject,    guidVUTPPCmdSet:RunGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY   ,       "Debug Project(&P)";
+    guidVUTPPCmdSet:cmdidDebugSelected,    guidVUTPPCmdSet:RunGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY,       "Debug Selected(&D)";
+    guidVUTPPCmdSet:cmdidStopRun,    guidVUTPPCmdSet:RunGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY,       "Stop(&S)";
+    guidVUTPPCmdSet:cmdidRefreshTestList,    guidVUTPPCmdSet:EtcGroup,    0x0100,        guidVUTPPCmdSet:bmpPic2,    BUTTON, TEXTONLY   ,       "Refresh Test List(&L)";
 
 
   BUTTONS_END

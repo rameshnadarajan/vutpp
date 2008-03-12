@@ -14,7 +14,8 @@ namespace larosel.VUTPP
         public static readonly Guid guidVUTPPCmdSet = new Guid(guidVUTPPCmdSetString);
         public static readonly Guid guidToolWindowPersistance = new Guid(guidToolWindowPersistanceString);
 
-        public const string guidSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
-        public const string guidVCProject = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}";
+        public static readonly string guidSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
+        public static readonly string guidVCProject = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}";
+        public static readonly string vsSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
     };
 }

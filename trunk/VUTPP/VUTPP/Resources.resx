@@ -124,15 +124,6 @@
     <value>For more information about VisualUnitTest++, see the website at http://vutpp.googlecode.com.</value>
   </data>
   <data name="ToolWindowTitle" xml:space="preserve">
-    <value>VisualUnitTest++ - 0.5 by www.larosel.com</value>
-  </data>
-  <data name="400" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Package.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="500" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Package.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="600" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Package.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>VisualUnitTest++ - 0.3 by www.larosel.com</value>
   </data>
 </root>

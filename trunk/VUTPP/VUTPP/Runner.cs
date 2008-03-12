@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.VisualStudio.VCProject;
-using Microsoft.VisualStudio.VCProjectEngine;
 
 namespace larosel.VUTPP
 {
@@ -43,17 +41,8 @@ namespace larosel.VUTPP
             projectname = project.UniqueName;
             m_Rule = TestRule.CheckProject(project);
             framework = m_Rule.Name;
-            VCProject vcProject = (VCProject)project.Object;
-            if (vcProject != null)
-            {
-                IVCCollection configs = (IVCCollection)vcProject.Configurations;
-                VCConfiguration config = (VCConfiguration)configs.Item(ActiveConfigurationName);
-                if (config.ConfigurationType == Microsoft.VisualStudio.VCProjectEngine.ConfigurationTypes.typeDynamicLibrary)
-                {
-                    dllpath = config.PrimaryOutput;
-                    m_bEnableBind = true;
-                }
-            }
+            dllpath = VCBind.GetPrimaryOutput(project, ActiveConfigurationName);
+            m_bEnableBind = dllpath != null;
         }
 
         ~Runner()

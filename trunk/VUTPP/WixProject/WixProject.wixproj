@@ -63,18 +63,8 @@
     <Compile Include="WixProject.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VUTPP\VUTPP.csproj">
-      <Name>VUTPP</Name>
-      <Project>{e5569d07-4d25-4c13-9994-ee129b6f8f2e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Registry2005.wxi" />
     <Content Include="Registry2008.wxi" />
-  </ItemGroup>
-  <ItemGroup>
-    <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
   <!--

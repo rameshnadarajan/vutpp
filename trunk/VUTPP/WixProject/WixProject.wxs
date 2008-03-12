@@ -10,9 +10,27 @@
         <Directory Id="INSTALLLOCATION" Name="VisualUnitTest++">
 
           <Component Id="ProductComponent" Guid="70df4c9c-8a05-49e5-b467-9988fd50418f">
-            <!-- TODO: Insert your files, registry keys, and other resources here. -->
+            <!-- Main Files -->
             <File Id="MainDll" Name="VisualUnitTest++.dll" Source="..\bin\Release\VisualUnitTest++.dll" Vital="yes" DiskId="1"/>
+            <File Id="VCBind2005.dll" Name="VCBind2005.dll" Source="..\bin\Release\VCBind2005.dll" Vital="yes" DiskId="1"/>
+            <File Id="VCBind2008.dll" Name="VCBind2008.dll" Source="..\bin\Release\VCBind2008.dll" Vital="yes" DiskId="1"/>
             <File Id="Rules" Name="Rules.xml" Source="..\VUTPP\Rules.xml" Vital="yes" DiskId="1"/>
+
+            <!-- Dependency Files -->
+            <File Id="Microsoft.VisualStudio.OLE.Interop.dll" Name="Microsoft.VisualStudio.OLE.Interop.dll" Source="dll\Microsoft.VisualStudio.OLE.Interop.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.ProjectAggregator.dll" Name="Microsoft.VisualStudio.ProjectAggregator.dll" Source="dll\Microsoft.VisualStudio.ProjectAggregator.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.Shell.dll" Name="Microsoft.VisualStudio.Shell.dll" Source="dll\Microsoft.VisualStudio.Shell.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.Shell.Interop.8.0.dll" Name="Microsoft.VisualStudio.Shell.Interop.8.0.dll" Source="dll\Microsoft.VisualStudio.Shell.Interop.8.0.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.Shell.Interop.dll" Name="Microsoft.VisualStudio.Shell.Interop.dll" Source="dll\Microsoft.VisualStudio.Shell.Interop.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.TextManager.Interop.8.0.dll" Name="Microsoft.VisualStudio.TextManager.Interop.8.0.dll" Source="dll\Microsoft.VisualStudio.TextManager.Interop.8.0.dll" Vital="yes" DiskId="1"/>
+            <File Id="Microsoft.VisualStudio.TextManager.Interop.dll" Name="Microsoft.VisualStudio.TextManager.Interop.dll" Source="dll\Microsoft.VisualStudio.TextManager.Interop.dll" Vital="yes" DiskId="1"/>
+
+            <!-- Bind Files -->
+            <File Id="BoostBind" Name="BoostBind.cpp" Source="..\..\VUTPPSamples\SampleBoostTest\VUTPPBind.cpp" Vital="yes" DiskId="1"/>
+            <File Id="CppUnitLiteBind" Name="CppUnitLiteBind.cpp" Source="..\..\VUTPPSamples\SampleCppUnitLite\VUTPPBind.cpp" Vital="yes" DiskId="1"/>
+            <File Id="CppUnitLite2Bind" Name="CppUnitLite2Bind.cpp" Source="..\..\VUTPPSamples\SampleCppUnitLite2\VUTPPBind.cpp" Vital="yes" DiskId="1"/>
+            <File Id="UnitTestppBind" Name="UnitTest++Bind.cpp" Source="..\..\VUTPPSamples\SampleUnitTest++\VUTPPBind.cpp" Vital="yes" DiskId="1"/>
+            <File Id="WinUnitBind" Name="WinUnitBind.cpp" Source="..\..\VUTPPSamples\SampleWinUnit\VUTPPBind.cpp" Vital="yes" DiskId="1"/>
             <?include Registry2005.wxi ?>
             <?include Registry2008.wxi ?>
           </Component>
@@ -21,9 +39,6 @@
       </Directory>
     </Directory>
 
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
-    <UIRef Id="WixUI_InstallDir" />
-    
     <Feature Id="ProductFeature" Level="1">
       <ComponentRef Id="ProductComponent" />
     </Feature>

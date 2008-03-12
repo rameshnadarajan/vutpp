@@ -17,11 +17,20 @@
 
 #define VSMenu                 0x1020
 #define VUTPPGroup                 0x1021
+#define RunGroup                 0x1022
+#define EtcGroup                 0x1023
 
 ///////////////////////////////////////////////////////////////////////////////
 // Command IDs
 
-#define cmdidUnitTestBrowser 0x101
+#define cmdidUnitTestBrowser	0x101
+#define cmdidConfig				0x102
+#define cmdidRefreshTestList	0x103
+#define cmdidRunAll				0x111
+#define cmdidRunSelected		0x112
+#define cmdidDebugProject		0x113
+#define cmdidDebugSelected		0x114
+#define cmdidStopRun			0x115
 
 
 ///////////////////////////////////////////////////////////////////////////////

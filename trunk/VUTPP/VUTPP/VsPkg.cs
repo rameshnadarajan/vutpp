@@ -78,8 +78,119 @@ namespace larosel.VUTPP
             }
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.tabControl1.SelectedTab = browser.Tests;
         }
 
+        private void ShowConfigWindow(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.tabControl1.SelectedTab = browser.Config;
+        }
+
+        private void evRunAll(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.ExecRunAll();
+        }
+
+        private void evRunSelected(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.ExecRunSelected();
+        }
+
+        private void evDebugProject(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+        }
+
+        private void evDebugSelected(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+        }
+
+        private void evStop(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.StopRunning();
+        }
+
+        private void evRefreshTestList(object sender, EventArgs e)
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new COMException(Resources.CanNotCreateWindow);
+            }
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            UnitTestBrowser browser = (UnitTestBrowser)window.Window;
+            browser.ExecRefreshTestList();
+        }
 
         /////////////////////////////////////////////////////////////////////////////
         // Overriden Package Implementation
@@ -99,9 +210,19 @@ namespace larosel.VUTPP
             if ( null != mcs )
             {
                 // Create the command for the tool window
-                CommandID toolwndCommandID = new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidUnitTestBrowser);
-                MenuCommand menuToolWin = new MenuCommand( new EventHandler(ShowToolWindow), toolwndCommandID);
-                mcs.AddCommand( menuToolWin );
+                MenuCommand mc = null;
+
+                mcs.AddCommand(new MenuCommand(new EventHandler(ShowToolWindow), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidUnitTestBrowser)));
+                mcs.AddCommand(new MenuCommand(new EventHandler(ShowConfigWindow), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidConfig)));
+                mcs.AddCommand(new MenuCommand(new EventHandler(evRefreshTestList), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRefreshTestList)));
+                mcs.AddCommand(new MenuCommand(new EventHandler(evRunAll), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunAll)));
+                mcs.AddCommand(new MenuCommand(new EventHandler(evRunSelected), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunSelected)));
+                mcs.AddCommand(mc = new MenuCommand(new EventHandler(evDebugProject), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidDebugProject)));
+                mc.Enabled = false;
+                mcs.AddCommand(mc = new MenuCommand(new EventHandler(evDebugSelected), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidDebugSelected)));
+                mc.Enabled = false;
+                mcs.AddCommand(mc = new MenuCommand(new EventHandler(evStop), new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidStopRun)));
+                mc.Enabled = false;
             }
         }
         #endregion

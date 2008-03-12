@@ -10,17 +10,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 //using Microsoft.VisualStudio.CommandBars;
-using Microsoft.VisualStudio.VCProject;
-using Microsoft.VisualStudio.VCProjectEngine;
 using EnvDTE;
-
+using Microsoft.VisualStudio.Shell;
+using System.ComponentModel.Design;
 
 namespace larosel.VUTPP
 {
     public partial class UnitTestBrowser : UserControl
     {
-        public string vsSolutionFolder = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
-
         public UnitTestBrowser()
         {
             m_dte = (EnvDTE.DTE)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE));
@@ -65,7 +62,7 @@ namespace larosel.VUTPP
                 ParseThread.Abort();
                 ParseThread = null;
             }
-            ReleaseProjectEvents();
+            TestList.Nodes.Clear();
             ReleaseEvents();
         }
 
@@ -151,11 +148,11 @@ namespace larosel.VUTPP
         static private bool bRunning = false;
 
         private DTE m_dte;			// Reference to the Visual Studio DTE object
-        private VCProjectEngineEvents vcprojectEvents = null;
         private SolutionEvents solutionEvents;
         private WindowEvents windowEvents;
         static private System.Windows.Forms.Timer parseTimer = new System.Windows.Forms.Timer();
         private System.Windows.Forms.ToolTip nodeTooltip = new System.Windows.Forms.ToolTip();
+
         public enum ICON_TYPE
         {
             READY,
@@ -538,13 +535,13 @@ namespace larosel.VUTPP
             }
         }
 
-        private ArrayList GetProjectList()
+        static public ArrayList GetProjectList(DTE dte)
         {
             ArrayList projectList = new ArrayList();
 
-            if (m_dte.Solution.IsOpen)
+            if (dte.Solution.IsOpen)
             {
-                foreach (Project project in m_dte.Solution.Projects)
+                foreach (Project project in dte.Solution.Projects)
                 {
                     GetProjectListRecursive(ref projectList, project);
                 }
@@ -552,11 +549,11 @@ namespace larosel.VUTPP
             return projectList;
         }
 
-        private void GetProjectListRecursive(ref ArrayList projectList, Project project)
+        static private void GetProjectListRecursive(ref ArrayList projectList, Project project)
         {
-            if (project.Kind == vcContextGuids.vcContextGuidVCProject)
+            if (project.Kind == GuidList.guidVCProject)
                 projectList.Add(project);
-            else if (project.Kind == vsSolutionFolder)
+            else if (project.Kind == GuidList.vsSolutionFolder)
             {
                 foreach (ProjectItem projectItem in project.ProjectItems)
                 {
@@ -571,8 +568,7 @@ namespace larosel.VUTPP
             TestList.Nodes.Clear();
             if (m_dte.Solution.IsOpen)
             {
-                InitProjectEvents();
-                ArrayList projectList = GetProjectList();
+                ArrayList projectList = GetProjectList(m_dte);
                 foreach (Project project in projectList)
                 {
                     RefreshProject(project, false);
@@ -694,9 +690,14 @@ namespace larosel.VUTPP
 
         private void RefreshTestList_Click(object sender, EventArgs e)
         {
-            if( IsRunning() == true )
+            ExecRefreshTestList();
+        }
+
+        public void ExecRefreshTestList()
+        {
+            if (IsRunning() == true)
                 return;
-            DoRefreshTestList( false );
+            DoRefreshTestList(false);
         }
 
         private void InitEvents()
@@ -718,24 +719,6 @@ namespace larosel.VUTPP
             }
         }
 
-        private void InitProjectEvents()
-        {
-            if (vcprojectEvents == null && m_dte.Solution.IsOpen == true)
-            {
-                ArrayList projectList = GetProjectList();
-                if (projectList.Count > 0)
-                {
-                    VCProjectItem item = (VCProjectItem)((Project)projectList[0]).Object;
-                    VCProjectEngine projEngine = (VCProjectEngine)item.VCProjectEngine;
-
-                    vcprojectEvents = (VCProjectEngineEvents)projEngine.Events;
-                    vcprojectEvents.ItemAdded += new _dispVCProjectEngineEvents_ItemAddedEventHandler(this.ItemAdded);
-                    vcprojectEvents.ItemRemoved += new _dispVCProjectEngineEvents_ItemRemovedEventHandler(this.ItemRemoved);
-                    vcprojectEvents.ItemRenamed += new _dispVCProjectEngineEvents_ItemRenamedEventHandler(this.ItemRenamed);
-                }
-            }
-        }
-
         private void ReleaseEvents()
         {
             if (solutionEvents != null)
@@ -750,17 +733,6 @@ namespace larosel.VUTPP
             if (windowEvents != null)
             {
                 windowEvents.WindowActivated -= new _dispWindowEvents_WindowActivatedEventHandler(WindowActivated);
-            }
-        }
-
-        private void ReleaseProjectEvents()
-        {
-            TestList.Nodes.Clear();
-            if (vcprojectEvents != null)
-            {
-                vcprojectEvents.ItemAdded -= new _dispVCProjectEngineEvents_ItemAddedEventHandler(this.ItemAdded);
-                vcprojectEvents.ItemRemoved -= new _dispVCProjectEngineEvents_ItemRemovedEventHandler(this.ItemRemoved);
-                vcprojectEvents.ItemRenamed -= new _dispVCProjectEngineEvents_ItemRenamedEventHandler(this.ItemRenamed);
             }
         }
 
@@ -783,7 +755,7 @@ namespace larosel.VUTPP
                 ParseThread.Abort();
                 ParseThread = null;
             }
-            ReleaseProjectEvents();
+            TestList.Nodes.Clear();
             SetRunning(false);
             StopParseTimer();
         }
@@ -830,21 +802,6 @@ namespace larosel.VUTPP
             }
         }
 
-        public void ItemAdded(object item, object parent)
-        {
-            if (IsRunning() == true)
-                return;
-
-            VCFile file = item as VCFile;
-
-            if (file != null)
-            {
-                ProjectItem projectItem = file.Object as ProjectItem;
-
-                AddItem(projectItem, USE_DOCUMENT.AUTO);
-            }
-        }
-
         private void RemoveItem(ProjectItem projectItem)
         {
             Project project = projectItem.ContainingProject;
@@ -877,63 +834,7 @@ namespace larosel.VUTPP
                             }
                         }
                     }
-                }
-            }
-        }
-
-        public void ItemRemoved(object item, object parent)
-        {
-            if (IsRunning() == true)
-                return;
-            VCFile file = item as VCFile;
-            if (file != null)
-            {
-                ProjectItem projectItem = file.Object as ProjectItem;
-                RemoveItem(projectItem);
-            }
-        }
-
-        public void ItemRenamed(object item, object parent, string oldName)
-        {
-            if (IsRunning() == true)
-                return;
-            VCFile file = item as VCFile;
-            if (file != null)
-            {
-                ProjectItem projectItem = file.Object as ProjectItem;
-                Project project = projectItem.ContainingProject;
-
-                if (projectItem != null && TestRule.CheckProject(project) != null)
-                {
-                    TreeNode[] projectNodes = TestList.Nodes.Find(projectItem.ContainingProject.UniqueName, false);
-                    if (projectNodes.Length > 0)
-                    {
-                        string fileName = projectItem.get_FileNames(0);
-                        oldName = fileName.Substring(0, fileName.Length - projectItem.Name.Length) + oldName;
-
-                        Queue<TreeNode> nodes = new Queue<TreeNode>();
-                        nodes.Enqueue(projectNodes[0]);
-
-                        while (nodes.Count > 0)
-                        {
-                            TreeNode node = nodes.Dequeue();
-
-                            for (int childIndex = 0; childIndex < node.Nodes.Count; childIndex++)
-                            {
-                                TreeNode child = node.Nodes[childIndex];
-                                TreeNodeTag tag = (TreeNodeTag)child.Tag;
-
-                                if (string.Compare(oldName, tag.file, true) == 0)
-                                {
-                                    tag.file = fileName;
-                                    child.Tag = tag;
-                                }
-                                nodes.Enqueue(child);
-                            }
-                        }
-
-                        ClearEmptySuite(projectNodes[0]);
-                    }
+                    ClearEmptySuite(projectNodes[0]);
                 }
             }
         }
@@ -1176,7 +1077,7 @@ namespace larosel.VUTPP
 
                 if (m_dte.Solution.IsOpen)
                 {
-                    ArrayList projectList = GetProjectList();
+                    ArrayList projectList = GetProjectList(m_dte);
                     foreach (Project project in projectList)
                     {
                         if (project.UniqueName == projectNode.Name)
@@ -1202,7 +1103,7 @@ namespace larosel.VUTPP
 
                 strTooltip += levelCount.GetTooltip(node, rule.SuiteType != SUITE_TYPE.NOT_USE).Trim();
 
-                nodeTooltip.Show(strTooltip, TestList, node.Bounds.Left, node.Bounds.Bottom+2);
+                nodeTooltip.Show(strTooltip, TestList, node.Bounds.Left, node.Bounds.Bottom + 2);
             }
         }
 
@@ -1228,7 +1129,7 @@ namespace larosel.VUTPP
                 LevelCount levelCount = new LevelCount();
                 foreach (TreeNode projectNode in TestList.Nodes)
                 {
-                    ArrayList projectList = GetProjectList();
+                    ArrayList projectList = GetProjectList(m_dte);
                     foreach (Project project in projectList)
                     {
                         if (project.UniqueName == projectNode.Name)
@@ -1284,7 +1185,7 @@ namespace larosel.VUTPP
 
             if (m_dte.Solution.IsOpen)
             {
-                ArrayList projectList = GetProjectList();
+                ArrayList projectList = GetProjectList(m_dte);
                 foreach (Project project in projectList)
                 {
                     if (project.UniqueName == projectNode.Name)
@@ -1392,7 +1293,7 @@ namespace larosel.VUTPP
                 else
                     bFirstBuild = false;
 
-                ArrayList projectList = GetProjectList();
+                ArrayList projectList = GetProjectList(m_dte);
                 foreach (Project project in projectList)
                 {
                     if (project.UniqueName == projectName)
@@ -1444,7 +1345,7 @@ namespace larosel.VUTPP
                     {
                         if (projectNode.Name == runner.ProjectName)
                         {
-                            ArrayList projectList = GetProjectList();
+                            ArrayList projectList = GetProjectList(m_dte);
                             foreach (Project project in projectList)
                             {
                                 if (project.UniqueName == runner.ProjectName)
@@ -1644,5 +1545,66 @@ namespace larosel.VUTPP
         {
             System.Diagnostics.Process.Start(linkLabel1.Text);
         }
+
+        private void RefreshTestList_EnabledChanged(object sender, EventArgs e)
+        {
+            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null != mcs)
+            {
+                MenuCommand command = mcs.FindCommand(new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRefreshTestList));
+                if (command != null)
+                {
+                    command.Enabled = RefreshTestList.Enabled;
+                }
+            }
+        }
+
+        private void RunAll_EnabledChanged(object sender, EventArgs e)
+        {
+            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null != mcs)
+            {
+                MenuCommand command = mcs.FindCommand(new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunAll));
+                if (command != null)
+                {
+                    command.Enabled = RunAll.Enabled;
+                }
+            }
+        }
+
+        private void RunSelected_EnabledChanged(object sender, EventArgs e)
+        {
+            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null != mcs)
+            {
+                MenuCommand command = mcs.FindCommand(new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidRunSelected));
+                if (command != null)
+                {
+                    command.Enabled = RunSelected.Enabled;
+                }
+            }
+        }
+
+        private void Stop_EnabledChanged(object sender, EventArgs e)
+        {
+            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null != mcs)
+            {
+                MenuCommand command = mcs.FindCommand(new CommandID(GuidList.guidVUTPPCmdSet, (int)PkgCmdIDList.cmdidStopRun));
+                if (command != null)
+                {
+                    command.Enabled = Stop.Enabled;
+                }
+            }
+        }
+
+        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+        }
+
     }
 }

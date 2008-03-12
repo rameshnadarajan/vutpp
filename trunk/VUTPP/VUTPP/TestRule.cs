@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using Microsoft.VisualStudio.VCProject;
-using Microsoft.VisualStudio.VCProjectEngine;
 
 namespace larosel.VUTPP
 {
@@ -87,39 +85,27 @@ namespace larosel.VUTPP
             if (project == null)
                 return null;
 
-            if (project.Kind == vcContextGuids.vcContextGuidVCProject)
+            if (project.Kind == GuidList.guidVCProject)
             {
-                VCProject vcProject = (VCProject)project.Object;
-                if (vcProject != null)
-                {
-                    IVCCollection configs = (IVCCollection)vcProject.Configurations;
-                    VCConfiguration config = (VCConfiguration)configs.Item(project.DTE.Solution.SolutionBuild.ActiveConfiguration.Name);
-                    if (config != null)
-                    {
-                        IVCCollection tools = (IVCCollection)config.Tools;
-                        VCCLCompilerTool compiler = (VCCLCompilerTool)tools.Item("VCCLCompilerTool");
-                        if (compiler != null)
-                        {
-                            if (compiler.PreprocessorDefinitions != null)
-                            {
-                                string PreprocessorDefinitions = compiler.PreprocessorDefinitions.ToUpper();
-                                int index = PreprocessorDefinitions.IndexOf("VUTPP_");
-                                if (index != -1)
-                                {
-                                    string projectDefine = PreprocessorDefinitions.Substring(index + 6);
-                                    char[] endDefine = { ' ', ';' };
-                                    int index2 = projectDefine.IndexOfAny(endDefine);
-                                    if (index2 != -1)
-                                        projectDefine = projectDefine.Substring(0, index2);
-                                    projectDefine = projectDefine.Trim();
+                string PreprocessorDefinitions = VCBind.GetPreprocessorDefinitions(project);
+                if (PreprocessorDefinitions == null)
+                    return null;
 
-                                    TestRule rule;
-                                    if (ConfigManager.Instance.TestRules.TryGetValue(projectDefine, out rule) == true)
-                                        return rule;
-                                }
-                            }
-                        }
-                    }
+                PreprocessorDefinitions = PreprocessorDefinitions.ToUpper();
+
+                int index = PreprocessorDefinitions.IndexOf("VUTPP_");
+                if (index != -1)
+                {
+                    string projectDefine = PreprocessorDefinitions.Substring(index + 6);
+                    char[] endDefine = { ' ', ';' };
+                    int index2 = projectDefine.IndexOfAny(endDefine);
+                    if (index2 != -1)
+                        projectDefine = projectDefine.Substring(0, index2);
+                    projectDefine = projectDefine.Trim();
+
+                    TestRule rule;
+                    if (ConfigManager.Instance.TestRules.TryGetValue(projectDefine, out rule) == true)
+                        return rule;
                 }
             }
             return null;

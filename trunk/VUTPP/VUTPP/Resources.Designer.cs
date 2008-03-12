@@ -60,27 +60,6 @@ namespace larosel.VUTPP {
             }
         }
         
-        internal static System.Drawing.Icon _400 {
-            get {
-                object obj = ResourceManager.GetObject("400", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap _500 {
-            get {
-                object obj = ResourceManager.GetObject("500", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon _600 {
-            get {
-                object obj = ResourceManager.GetObject("600", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Can not create tool window.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -100,7 +79,7 @@ namespace larosel.VUTPP {
         }
         
         /// <summary>
-        ///   VisualUnitTest++ - 0.5 by www.larosel.com과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   VisualUnitTest++ - 0.3 by www.larosel.com과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string ToolWindowTitle {
             get {

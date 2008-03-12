@@ -1,6 +1,16 @@
 #summary History and Changes
 #labels Featured
 
+=== Version 0.3 (2008/03/13) ===
+ * issue 10 : add support VisualStudio 2008
+ * issue 7 : fix compiler.PreprocessorDefinitions problem
+ * issue 8 : add support winunit
+ * issue 11 : VUTPP cannot find TEST in Solution Folder 
+ * issue 13 : Add support shortcut-key
+ * convert project to VSPackage
+ * Improve ReparseCurrentFile(for Navigate and Update List) to use thread
+ * Add MenuBar
+
 === Version 0.2 (2008/01/15) ===
  * Vista가 아닌 OS에서 Icon이 제대로 나오지 않는 버그 수정(Shell32.dll의 아이콘을 사용하도록 했는데 OS별로 아이콘내용이 달라서 생기는 문제였음, famfamfam.com의 무료아이콘을 포함하도록 변경)
  * dll프로젝트가 아닌경우 run을 지원하지 않도록 수정

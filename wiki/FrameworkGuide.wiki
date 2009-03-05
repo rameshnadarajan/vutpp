@@ -2,7 +2,7 @@
 #labels Phase-Implementation,Phase-Deploy,Featured
 = Framework Common =
  * convert your project to Dynamic Dll
- * Add bind code to your project from samples or install folder
+ * Add bind codes to your project from samples
 
 = BoostTest =
  * compiler.PreprocessorDefinitions need "VUTPP_BOOSTTEST"

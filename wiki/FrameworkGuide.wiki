@@ -1,5 +1,8 @@
 #summary Framework Guide
 #labels Phase-Implementation,Phase-Deploy,Featured
+
+<wiki:toc max_depth="2" />
+
 = Framework Common =
  * convert your project to Dynamic Dll
  * Add bind codes to your project from samples

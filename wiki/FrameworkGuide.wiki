@@ -7,15 +7,15 @@
  * convert your project to Dynamic Dll
  * Add bind codes to your project from samples
 
-= BoostTest =
+= !BoostTest =
  * compiler.PreprocessorDefinitions need "VUTPP_BOOSTTEST"
  * main suite name must "DefaultSuite" - use '#define BOOST_TEST_MODULE DefaultSuite'
 
-= UnitTest++ =
+= !UnitTest++ =
  * framework home : http://sourceforge.net/projects/unittest-cpp/
  * compiler.PreprocessorDefinitions need "VUTPP_UNITTEST++"
 
-= CppUnitLite2 =
+= !CppUnitLite2 =
  * framework home : http://www.gamesfromwithin.com/articles/0512/000103.html
  * compiler.PreprocessorDefinitions need "VUTPP_CPPUNITLITE2"
  * Fix library codes
@@ -30,7 +30,7 @@ int LineNumber() const { return m_lineNumber; }
 const char *Name() const { return m_name; }
 }}}
 
-= CppUnitLite =
+= !CppUnitLite =
  * framework home : http://c2.com/cgi/wiki?CppUnitLite
  * compiler.PreprocessorDefinitions need "VUTPP_CPPUNITLITE"
  * Convert CppUnitLite library to static lib or dynamic dll
@@ -43,6 +43,6 @@ Test.h
 char* Name() { return name_.asCharString(); }  
 }}}
 
-= WinUnit =
+= !WinUnit =
  * framework home : http://msdn2.microsoft.com/ko-kr/magazine/cc136757.aspx
  * compiler.PreprocessorDefinitions need "VUTPP_WINUNIT"

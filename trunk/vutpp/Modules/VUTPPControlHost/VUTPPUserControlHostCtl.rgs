@@ -1,0 +1,32 @@
+HKCR
+{
+	VUTPPUserControlHost.VUTPPUserControlHostCtl.1 = s 'VUTPPUserControlHostCtl Class'
+	{
+		CLSID = s '{fd5177df-46de-4c6b-9588-9d1590b3525c}'
+	}
+	VUTPPUserControlHost.VUTPPUserControlHostCtl = s 'VUTPPUserControlHostCtl Class'
+	{
+		CLSID = s '{fd5177df-46de-4c6b-9588-9d1590b3525c}'
+		CurVer = s 'VUTPPUserControlHost.VUTPPUserControlHostCtl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {fd5177df-46de-4c6b-9588-9d1590b3525c} = s 'VUTPPUserControlHostCtl Class'
+		{
+			ProgID = s 'VUTPPUserControlHost.VUTPPUserControlHostCtl.1'
+			VersionIndependentProgID = s 'VUTPPUserControlHost.VUTPPUserControlHostCtl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			'TypeLib' = s '{b9d76b0d-6130-41b3-a40b-2614087b56dd}'
+			'Version' = s '1.01'
+		}
+	}
+}

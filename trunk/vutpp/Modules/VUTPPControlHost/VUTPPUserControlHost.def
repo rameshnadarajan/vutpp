@@ -1,0 +1,9 @@
+; VUTPPUserControlHost.def : Declares the module parameters.
+
+LIBRARY "VUTPPUserControlHost.dll"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

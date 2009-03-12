@@ -1,6 +1,15 @@
 #summary History and Changes
 #labels Featured
 
+=== Version 0.4 (2009/03/12) ===
+ * Add support VisualStudio 2003
+ * Add support GoogleTest
+ * Change project base to console application from dll(exclude winunit)
+ * convert back project to addin
+ * Improve many codes.
+ * Add many exception codes
+ * change bind codes
+
 === Version 0.3 (2008/03/13) ===
  * issue 10 : add support VisualStudio 2008
  * issue 7 : fix compiler.PreprocessorDefinitions problem

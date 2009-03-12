@@ -4,7 +4,6 @@
 <wiki:toc max_depth="2" />
 
 = Framework Common =
- * convert your project to Dynamic Dll
  * Add bind codes to your project from samples
 
 = !BoostTest =
@@ -46,3 +45,28 @@ char* Name() { return name_.asCharString(); }
 = !WinUnit =
  * framework home : http://msdn2.microsoft.com/ko-kr/magazine/cc136757.aspx
  * compiler.PreprocessorDefinitions need "VUTPP_WINUNIT"
+
+= !GoogleTest =
+ * framework home : http://googletest.googlecode.com
+ * compiler.PreprocessorDefinitions need "VUTPP_GOOGLETEST"
+ 
+{{{
+move class implementation of UnitTestEventListenerInterface to gtest.h from gtest.cc
+
+add parse function header to testing::internal(gtest.h)
+
+// gtest.h
+void ParseGoogleTestFlagsOnly(int* argc, char** argv);
+void ParseGoogleTestFlagsOnly(int* argc, wchar_t** argv);
+
+Add AddListener function in UnitTest class
+
+// gtest.h
+void AddListener(class UnitTestEventListenerInterface *listener);
+
+// gtest.cpp
+void UnitTest::AddListener(UnitTestEventListenerInterface *listener)
+{
+        internal::MutexLock lock(&mutex_);
+        static_cast<UnitTestEventsRepeater*>( impl_->result_printer() )->AddListener( listener );
+}}}

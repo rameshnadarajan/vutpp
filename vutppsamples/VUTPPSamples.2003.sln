@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleBoostTest.2003", "SampleBoostTest\SampleBoostTest.2003.vcproj", "{D1333BB1-1027-4BF7-AC1B-8F590DF1EE36}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleUnitTest++.2003", "SampleUnitTest++\SampleUnitTest++.2003.vcproj", "{230CDCAA-B98D-4077-AFAF-0CAE1BB3C4E9}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleCppUnitLite.2003", "SampleCppUnitLite\SampleCppUnitLite.2003.vcproj", "{5D20663A-8FA2-4194-A5F3-97E78DCB74C2}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleCppUnitLite2.2003", "SampleCppUnitLite2\SampleCppUnitLite2.2003.vcproj", "{5408AAA2-B017-4E88-93A0-2D22E60C1C18}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleGoogleTest.2003", "SampleGoogleTest\SampleGoogleTest.2003.vcproj", "{8DA3D2A8-85CD-4F28-82C6-F1B1CAD5B529}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{D1333BB1-1027-4BF7-AC1B-8F590DF1EE36}.Debug.ActiveCfg = Debug|Win32
+		{D1333BB1-1027-4BF7-AC1B-8F590DF1EE36}.Debug.Build.0 = Debug|Win32
+		{D1333BB1-1027-4BF7-AC1B-8F590DF1EE36}.Release.ActiveCfg = Release|Win32
+		{D1333BB1-1027-4BF7-AC1B-8F590DF1EE36}.Release.Build.0 = Release|Win32
+		{230CDCAA-B98D-4077-AFAF-0CAE1BB3C4E9}.Debug.ActiveCfg = Debug|Win32
+		{230CDCAA-B98D-4077-AFAF-0CAE1BB3C4E9}.Debug.Build.0 = Debug|Win32
+		{230CDCAA-B98D-4077-AFAF-0CAE1BB3C4E9}.Release.ActiveCfg = Release|Win32
+		{230CDCAA-B98D-4077-AFAF-0CAE1BB3C4E9}.Release.Build.0 = Release|Win32
+		{5D20663A-8FA2-4194-A5F3-97E78DCB74C2}.Debug.ActiveCfg = Debug|Win32
+		{5D20663A-8FA2-4194-A5F3-97E78DCB74C2}.Debug.Build.0 = Debug|Win32
+		{5D20663A-8FA2-4194-A5F3-97E78DCB74C2}.Release.ActiveCfg = Release|Win32
+		{5D20663A-8FA2-4194-A5F3-97E78DCB74C2}.Release.Build.0 = Release|Win32
+		{5408AAA2-B017-4E88-93A0-2D22E60C1C18}.Debug.ActiveCfg = Debug|Win32
+		{5408AAA2-B017-4E88-93A0-2D22E60C1C18}.Debug.Build.0 = Debug|Win32
+		{5408AAA2-B017-4E88-93A0-2D22E60C1C18}.Release.ActiveCfg = Release|Win32
+		{5408AAA2-B017-4E88-93A0-2D22E60C1C18}.Release.Build.0 = Release|Win32
+		{8DA3D2A8-85CD-4F28-82C6-F1B1CAD5B529}.Debug.ActiveCfg = Debug|Win32
+		{8DA3D2A8-85CD-4F28-82C6-F1B1CAD5B529}.Debug.Build.0 = Debug|Win32
+		{8DA3D2A8-85CD-4F28-82C6-F1B1CAD5B529}.Release.ActiveCfg = Release|Win32
+		{8DA3D2A8-85CD-4F28-82C6-F1B1CAD5B529}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

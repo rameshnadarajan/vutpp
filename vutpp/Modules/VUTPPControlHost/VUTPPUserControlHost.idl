@@ -1,0 +1,25 @@
+// This file will be processed by the MIDL tool to
+// produce the type library (VUTPPUserControlHost.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[object, uuid(27d3b582-2423-4736-b869-3be635b8d272), dual, nonextensible, helpstring("Xtreme Simplicity IVUTPPUserControlHostCtlCtl Interface"), pointer_default(unique)]
+interface IVUTPPUserControlHostCtlCtl : IDispatch
+{
+	[id(1), helpstring("Host a .NET User Control within a Tool Window.")] 
+	HRESULT HostUserControl(IUnknown *userControl);
+};
+
+[uuid(b9d76b0d-6130-41b3-a40b-2614087b56dd), version(1.0), helpstring("Xtreme Simplicity VUTPPUserControlHost 1.0 Type Library")]
+library VUTPPUserControlHostLib
+{
+	importlib("stdole2.tlb");
+
+	[uuid(fd5177df-46de-4c6b-9588-9d1590b3525c), helpstring("VUTPPUserControlHostCtl Class")]
+	coclass VUTPPUserControlHostCtl
+	{
+		[default] interface IVUTPPUserControlHostCtlCtl;
+	};
+};

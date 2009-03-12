@@ -69,4 +69,5 @@ void UnitTest::AddListener(UnitTestEventListenerInterface *listener)
 {
         internal::MutexLock lock(&mutex_);
         static_cast<UnitTestEventsRepeater*>( impl_->result_printer() )->AddListener( listener );
+}
 }}}

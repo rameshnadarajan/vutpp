@@ -25,6 +25,8 @@ namespace VUTPP
 	public class UnitTestBrowser : System.Windows.Forms.UserControl
 	{
 		private System.ComponentModel.IContainer components;
+		private Label LabelContributor;
+		private LinkLabel linkContributor;
 
         private bool bUseThread = true;
 
@@ -512,7 +514,7 @@ namespace VUTPP
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(UnitTestBrowser));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnitTestBrowser));
 			this.progressBar = new VistaStyleProgressBar.ProgressBar();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.Tests = new System.Windows.Forms.TabPage();
@@ -524,8 +526,16 @@ namespace VUTPP
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.Config = new System.Windows.Forms.TabPage();
 			this.About = new System.Windows.Forms.GroupBox();
+			this.LabelContributor = new System.Windows.Forms.Label();
+			this.linkContributor = new System.Windows.Forms.LinkLabel();
 			this.linkProjectHome = new System.Windows.Forms.LinkLabel();
 			this.labelProjectHome = new System.Windows.Forms.Label();
+			this.linkAuthorHome = new System.Windows.Forms.LinkLabel();
+			this.labelAuthorHome = new System.Windows.Forms.Label();
+			this.linkProgressBar = new System.Windows.Forms.LinkLabel();
+			this.labelProgressBar = new System.Windows.Forms.Label();
+			this.labelIcon = new System.Windows.Forms.Label();
+			this.linkIcon = new System.Windows.Forms.LinkLabel();
 			this.AutoBuild = new System.Windows.Forms.CheckBox();
 			this.labelTestTimeOut = new System.Windows.Forms.Label();
 			this.TestTimeOut = new System.Windows.Forms.NumericUpDown();
@@ -534,12 +544,6 @@ namespace VUTPP
 			this.DisplayFullpath = new System.Windows.Forms.CheckBox();
 			this.labelConnectWait = new System.Windows.Forms.Label();
 			this.ConnectWait = new System.Windows.Forms.NumericUpDown();
-			this.linkAuthorHome = new System.Windows.Forms.LinkLabel();
-			this.labelAuthorHome = new System.Windows.Forms.Label();
-			this.linkProgressBar = new System.Windows.Forms.LinkLabel();
-			this.labelProgressBar = new System.Windows.Forms.Label();
-			this.labelIcon = new System.Windows.Forms.Label();
-			this.linkIcon = new System.Windows.Forms.LinkLabel();
 			this.tabControl1.SuspendLayout();
 			this.Tests.SuspendLayout();
 			this.Config.SuspendLayout();
@@ -550,8 +554,8 @@ namespace VUTPP
 			// 
 			// progressBar
 			// 
-			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar.BackColor = System.Drawing.Color.Transparent;
 			this.progressBar.Location = new System.Drawing.Point(8, 32);
 			this.progressBar.Name = "progressBar";
@@ -577,9 +581,9 @@ namespace VUTPP
 			this.Tests.Controls.Add(this.RunAll);
 			this.Tests.Controls.Add(this.TestList);
 			this.Tests.Controls.Add(this.progressBar);
-			this.Tests.Location = new System.Drawing.Point(4, 21);
+			this.Tests.Location = new System.Drawing.Point(4, 22);
 			this.Tests.Name = "Tests";
-			this.Tests.Size = new System.Drawing.Size(328, 487);
+			this.Tests.Size = new System.Drawing.Size(328, 486);
 			this.Tests.TabIndex = 1;
 			this.Tests.Text = "Tests";
 			// 
@@ -623,27 +627,35 @@ namespace VUTPP
 			// 
 			// TestList
 			// 
-			this.TestList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.TestList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TestList.Cursor = System.Windows.Forms.Cursors.Default;
 			this.TestList.HotTracking = true;
+			this.TestList.ImageIndex = 0;
 			this.TestList.ImageList = this.imageList1;
 			this.TestList.Location = new System.Drawing.Point(8, 64);
 			this.TestList.Name = "TestList";
+			this.TestList.SelectedImageIndex = 0;
 			this.TestList.Size = new System.Drawing.Size(312, 384);
 			this.TestList.TabIndex = 0;
-			this.TestList.DoubleClick += new System.EventHandler(this.TestList_DoubleClick);
-			this.TestList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TestList_AfterSelect);
 			this.TestList.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TestList_BeforeSelect);
-			this.TestList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TestList_MouseMove);
+			this.TestList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TestList_AfterSelect);
+			this.TestList.DoubleClick += new System.EventHandler(this.TestList_DoubleClick);
 			this.TestList.MouseLeave += new System.EventHandler(this.TestList_MouseLeave);
+			this.TestList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TestList_MouseMove);
 			// 
 			// imageList1
 			// 
-			this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
 			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
 			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList1.Images.SetKeyName(0, "");
+			this.imageList1.Images.SetKeyName(1, "");
+			this.imageList1.Images.SetKeyName(2, "");
+			this.imageList1.Images.SetKeyName(3, "");
+			this.imageList1.Images.SetKeyName(4, "");
+			this.imageList1.Images.SetKeyName(5, "");
+			this.imageList1.Images.SetKeyName(6, "");
 			// 
 			// Config
 			// 
@@ -656,16 +668,18 @@ namespace VUTPP
 			this.Config.Controls.Add(this.DisplayFullpath);
 			this.Config.Controls.Add(this.labelConnectWait);
 			this.Config.Controls.Add(this.ConnectWait);
-			this.Config.Location = new System.Drawing.Point(4, 21);
+			this.Config.Location = new System.Drawing.Point(4, 22);
 			this.Config.Name = "Config";
-			this.Config.Size = new System.Drawing.Size(328, 487);
+			this.Config.Size = new System.Drawing.Size(328, 486);
 			this.Config.TabIndex = 1;
 			this.Config.Text = "Config";
 			// 
 			// About
 			// 
-			this.About.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.About.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.About.Controls.Add(this.LabelContributor);
+			this.About.Controls.Add(this.linkContributor);
 			this.About.Controls.Add(this.linkProjectHome);
 			this.About.Controls.Add(this.labelProjectHome);
 			this.About.Controls.Add(this.linkAuthorHome);
@@ -674,12 +688,31 @@ namespace VUTPP
 			this.About.Controls.Add(this.labelProgressBar);
 			this.About.Controls.Add(this.labelIcon);
 			this.About.Controls.Add(this.linkIcon);
-			this.About.Location = new System.Drawing.Point(8, 360);
+			this.About.Location = new System.Drawing.Point(8, 326);
 			this.About.Name = "About";
-			this.About.Size = new System.Drawing.Size(312, 120);
+			this.About.Size = new System.Drawing.Size(312, 154);
 			this.About.TabIndex = 6;
 			this.About.TabStop = false;
 			this.About.Text = "About";
+			// 
+			// LabelContributor
+			// 
+			this.LabelContributor.Location = new System.Drawing.Point(8, 121);
+			this.LabelContributor.Name = "LabelContributor";
+			this.LabelContributor.Size = new System.Drawing.Size(88, 16);
+			this.LabelContributor.TabIndex = 2;
+			this.LabelContributor.Text = "Contributor :";
+			// 
+			// linkContributor
+			// 
+			this.linkContributor.BackColor = System.Drawing.Color.Transparent;
+			this.linkContributor.Location = new System.Drawing.Point(96, 121);
+			this.linkContributor.Name = "linkContributor";
+			this.linkContributor.Size = new System.Drawing.Size(136, 16);
+			this.linkContributor.TabIndex = 3;
+			this.linkContributor.TabStop = true;
+			this.linkContributor.Text = "blog.powerumc.kr";
+			this.linkContributor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkContributor_LinkClicked);
 			// 
 			// linkProjectHome
 			// 
@@ -700,10 +733,68 @@ namespace VUTPP
 			this.labelProjectHome.TabIndex = 0;
 			this.labelProjectHome.Text = "ProjectHome :";
 			// 
+			// linkAuthorHome
+			// 
+			this.linkAuthorHome.BackColor = System.Drawing.Color.Transparent;
+			this.linkAuthorHome.Location = new System.Drawing.Point(96, 48);
+			this.linkAuthorHome.Name = "linkAuthorHome";
+			this.linkAuthorHome.Size = new System.Drawing.Size(112, 16);
+			this.linkAuthorHome.TabIndex = 1;
+			this.linkAuthorHome.TabStop = true;
+			this.linkAuthorHome.Text = "www.larosel.com";
+			this.linkAuthorHome.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAuthorHome_LinkClicked);
+			// 
+			// labelAuthorHome
+			// 
+			this.labelAuthorHome.Location = new System.Drawing.Point(8, 48);
+			this.labelAuthorHome.Name = "labelAuthorHome";
+			this.labelAuthorHome.Size = new System.Drawing.Size(88, 16);
+			this.labelAuthorHome.TabIndex = 0;
+			this.labelAuthorHome.Text = "AuthorHome :";
+			// 
+			// linkProgressBar
+			// 
+			this.linkProgressBar.BackColor = System.Drawing.Color.Transparent;
+			this.linkProgressBar.Location = new System.Drawing.Point(96, 72);
+			this.linkProgressBar.Name = "linkProgressBar";
+			this.linkProgressBar.Size = new System.Drawing.Size(184, 16);
+			this.linkProgressBar.TabIndex = 1;
+			this.linkProgressBar.TabStop = true;
+			this.linkProgressBar.Text = "Vista Style Progress Bar in C#";
+			this.linkProgressBar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkProgressBar_LinkClicked);
+			// 
+			// labelProgressBar
+			// 
+			this.labelProgressBar.Location = new System.Drawing.Point(8, 72);
+			this.labelProgressBar.Name = "labelProgressBar";
+			this.labelProgressBar.Size = new System.Drawing.Size(88, 16);
+			this.labelProgressBar.TabIndex = 0;
+			this.labelProgressBar.Text = "ProgressBar :";
+			// 
+			// labelIcon
+			// 
+			this.labelIcon.Location = new System.Drawing.Point(8, 96);
+			this.labelIcon.Name = "labelIcon";
+			this.labelIcon.Size = new System.Drawing.Size(88, 16);
+			this.labelIcon.TabIndex = 0;
+			this.labelIcon.Text = "IconFile :";
+			// 
+			// linkIcon
+			// 
+			this.linkIcon.BackColor = System.Drawing.Color.Transparent;
+			this.linkIcon.Location = new System.Drawing.Point(96, 96);
+			this.linkIcon.Name = "linkIcon";
+			this.linkIcon.Size = new System.Drawing.Size(136, 16);
+			this.linkIcon.TabIndex = 1;
+			this.linkIcon.TabStop = true;
+			this.linkIcon.Text = "www.famfamfam.com";
+			this.linkIcon.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIcon_LinkClicked);
+			// 
 			// AutoBuild
 			// 
 			this.AutoBuild.Location = new System.Drawing.Point(8, 80);
 			this.AutoBuild.Name = "AutoBuild";
+			this.AutoBuild.Size = new System.Drawing.Size(104, 24);
 			this.AutoBuild.TabIndex = 5;
 			this.AutoBuild.Text = "AutoBuild";
 			this.AutoBuild.CheckedChanged += new System.EventHandler(this.AutoBuild_CheckedChanged);
@@ -765,69 +856,12 @@ namespace VUTPP
 			this.ConnectWait.Name = "ConnectWait";
 			this.ConnectWait.Size = new System.Drawing.Size(64, 21);
 			this.ConnectWait.TabIndex = 3;
-			this.ConnectWait.Value = new System.Decimal(new int[] {
-																	  5,
-																	  0,
-																	  0,
-																	  0});
+			this.ConnectWait.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
 			this.ConnectWait.ValueChanged += new System.EventHandler(this.ConnectWait_ValueChanged);
-			// 
-			// linkAuthorHome
-			// 
-			this.linkAuthorHome.BackColor = System.Drawing.Color.Transparent;
-			this.linkAuthorHome.Location = new System.Drawing.Point(96, 48);
-			this.linkAuthorHome.Name = "linkAuthorHome";
-			this.linkAuthorHome.Size = new System.Drawing.Size(112, 16);
-			this.linkAuthorHome.TabIndex = 1;
-			this.linkAuthorHome.TabStop = true;
-			this.linkAuthorHome.Text = "www.larosel.com";
-			this.linkAuthorHome.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAuthorHome_LinkClicked);
-			// 
-			// labelAuthorHome
-			// 
-			this.labelAuthorHome.Location = new System.Drawing.Point(8, 48);
-			this.labelAuthorHome.Name = "labelAuthorHome";
-			this.labelAuthorHome.Size = new System.Drawing.Size(88, 16);
-			this.labelAuthorHome.TabIndex = 0;
-			this.labelAuthorHome.Text = "AuthorHome :";
-			// 
-			// linkProgressBar
-			// 
-			this.linkProgressBar.BackColor = System.Drawing.Color.Transparent;
-			this.linkProgressBar.Location = new System.Drawing.Point(96, 72);
-			this.linkProgressBar.Name = "linkProgressBar";
-			this.linkProgressBar.Size = new System.Drawing.Size(184, 16);
-			this.linkProgressBar.TabIndex = 1;
-			this.linkProgressBar.TabStop = true;
-			this.linkProgressBar.Text = "Vista Style Progress Bar in C#";
-			this.linkProgressBar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkProgressBar_LinkClicked);
-			// 
-			// labelProgressBar
-			// 
-			this.labelProgressBar.Location = new System.Drawing.Point(8, 72);
-			this.labelProgressBar.Name = "labelProgressBar";
-			this.labelProgressBar.Size = new System.Drawing.Size(88, 16);
-			this.labelProgressBar.TabIndex = 0;
-			this.labelProgressBar.Text = "ProgressBar :";
-			// 
-			// labelIcon
-			// 
-			this.labelIcon.Location = new System.Drawing.Point(8, 96);
-			this.labelIcon.Name = "labelIcon";
-			this.labelIcon.Size = new System.Drawing.Size(88, 16);
-			this.labelIcon.TabIndex = 0;
-			this.labelIcon.Text = "IconFile :";
-			// 
-			// linkIcon
-			// 
-			this.linkIcon.BackColor = System.Drawing.Color.Transparent;
-			this.linkIcon.Location = new System.Drawing.Point(96, 96);
-			this.linkIcon.Name = "linkIcon";
-			this.linkIcon.Size = new System.Drawing.Size(136, 16);
-			this.linkIcon.TabIndex = 1;
-			this.linkIcon.TabStop = true;
-			this.linkIcon.Text = "www.famfamfam.com";
-			this.linkIcon.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIcon_LinkClicked);
 			// 
 			// UnitTestBrowser
 			// 
@@ -2367,6 +2401,12 @@ namespace VUTPP
 		{
 			e.Link.Visited = true;
 			System.Diagnostics.Process.Start("http://www.famfamfam.com/lab/icons/");
+		}
+
+		private void linkContributor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			e.Link.Visited = true;
+			System.Diagnostics.Process.Start("http://blog.powerumc.kr/");
 		}
 
 	}

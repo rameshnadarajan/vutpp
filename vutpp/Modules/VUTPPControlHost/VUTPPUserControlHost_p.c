@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0555 */
-/* at Wed Dec 08 00:15:14 2010
+/* at Wed Dec 08 01:02:38 2010
  */
 /* Compiler settings for VUTPPUserControlHost.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 

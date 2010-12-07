@@ -1,7 +1,7 @@
 using EnvDTE;
 
 #if !VS2003
-using EnvDTE80;
+using EnvDTE;
 using DTE = EnvDTE80.DTE2;
 #endif
 
@@ -23,6 +23,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using EnvDTE80;
 
 namespace VUTPP
 {
@@ -62,7 +63,7 @@ namespace VUTPP
 			{
 //				Trace.Write("ext_cm_UISetup");
 
-				try 
+				try
 				{
 					CreateVUTPPMenu();
 				}

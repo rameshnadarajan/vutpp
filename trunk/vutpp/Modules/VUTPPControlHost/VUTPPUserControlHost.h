@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 6.00.0361 */
-/* at Thu Mar 12 15:35:27 2009
+ /* File created by MIDL compiler version 7.00.0555 */
+/* at Wed Dec 08 00:15:14 2010
  */
-/* Compiler settings for .\VUTPPUserControlHost.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+/* Compiler settings for VUTPPUserControlHost.idl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -71,8 +71,6 @@ typedef struct VUTPPUserControlHostCtl VUTPPUserControlHostCtl;
 extern "C"{
 #endif 
 
-void * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void * ); 
 
 #ifndef __IVUTPPUserControlHostCtlCtl_INTERFACE_DEFINED__
 #define __IVUTPPUserControlHostCtlCtl_INTERFACE_DEFINED__
@@ -103,7 +101,8 @@ EXTERN_C const IID IID_IVUTPPUserControlHostCtlCtl;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVUTPPUserControlHostCtlCtl * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ void **ppvObject);
+            /* [annotation][iid_is][out] */ 
+            __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVUTPPUserControlHostCtlCtl * This);
@@ -125,7 +124,7 @@ EXTERN_C const IID IID_IVUTPPUserControlHostCtlCtl;
             IVUTPPUserControlHostCtlCtl * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [in] */ UINT cNames,
+            /* [range][in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -158,48 +157,36 @@ EXTERN_C const IID IID_IVUTPPUserControlHostCtlCtl;
 
 
 #define IVUTPPUserControlHostCtlCtl_QueryInterface(This,riid,ppvObject)	\
-    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
 #define IVUTPPUserControlHostCtlCtl_AddRef(This)	\
-    (This)->lpVtbl -> AddRef(This)
+    ( (This)->lpVtbl -> AddRef(This) ) 
 
 #define IVUTPPUserControlHostCtlCtl_Release(This)	\
-    (This)->lpVtbl -> Release(This)
+    ( (This)->lpVtbl -> Release(This) ) 
 
 
 #define IVUTPPUserControlHostCtlCtl_GetTypeInfoCount(This,pctinfo)	\
-    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
+    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
 
 #define IVUTPPUserControlHostCtlCtl_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
+    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
 
 #define IVUTPPUserControlHostCtlCtl_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
+    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
 
 #define IVUTPPUserControlHostCtlCtl_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
+    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
 #define IVUTPPUserControlHostCtlCtl_HostUserControl(This,userControl)	\
-    (This)->lpVtbl -> HostUserControl(This,userControl)
+    ( (This)->lpVtbl -> HostUserControl(This,userControl) ) 
 
 #endif /* COBJMACROS */
 
 
 #endif 	/* C style interface */
 
-
-
-/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IVUTPPUserControlHostCtlCtl_HostUserControl_Proxy( 
-    IVUTPPUserControlHostCtlCtl * This,
-    IUnknown *userControl);
-
-
-void __RPC_STUB IVUTPPUserControlHostCtlCtl_HostUserControl_Stub(
-    IRpcStubBuffer *This,
-    IRpcChannelBuffer *_pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
 
 
 

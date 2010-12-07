@@ -17,6 +17,7 @@ namespace VUTPP
 			{
 				case "7.10":
 				case "9.0":
+				case "10.0":
 					return GetTransparentIPictureDispFromBitmapHandle( appIcon.GetHbitmap() );
 
 				case "8.0":

@@ -29,13 +29,10 @@ namespace VUTPP
 					mainAssemblyFile.Append("VS2008");
 					break;
 
-				case "10.0":
-					mainAssemblyFile.Append("VS2010");
-					break;
-
 				default:
 					throw new ArgumentOutOfRangeException("runtimeVersion", string.Format(Constants.FrameworkNotSupported, runtimeVersion));
-			}mainAssemblyFile.Append(".dll");
+			}
+			mainAssemblyFile.Append(".dll");
 			return Assembly.LoadFrom(mainAssemblyFile.ToString());
 		}
 	}

@@ -8,7 +8,7 @@ namespace VUTPP
 	public struct Constants
 	{
 		public const string ProgramTitle        = "VisualUnitTest++";
-		public const string ToolWindowTitle     = "VisualUnitTest++ - 0.41 by www.larosel.com, update by blog.powerumc.kr";
+		public const string ToolWindowTitle     = "VisualUnitTest++ - 0.4 by www.larosel.com";
 		public const string ProgId              = "VUTPP.Connect";
 		public const string CommandBarName      = "VUTPP";
 		public const string MenuName            = "V&UTPP";

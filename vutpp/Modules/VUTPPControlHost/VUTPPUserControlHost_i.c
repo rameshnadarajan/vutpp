@@ -5,18 +5,21 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 7.00.0555 */
-/* at Wed Dec 08 01:02:38 2010
+ /* File created by MIDL compiler version 6.00.0361 */
+/* at Thu Mar 12 15:35:27 2009
  */
-/* Compiler settings for VUTPPUserControlHost.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
+/* Compiler settings for .\VUTPPUserControlHost.idl:
+    Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-/* @@MIDL_FILE_HEADING(  ) */
+//@@MIDL_FILE_HEADING(  )
+
+#if !defined(_M_IA64) && !defined(_M_AMD64)
+
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -82,4 +85,6 @@ MIDL_DEFINE_GUID(CLSID, CLSID_VUTPPUserControlHostCtl,0xfd5177df,0x46de,0x4c6b,0
 #endif
 
 
+
+#endif /* !defined(_M_IA64) && !defined(_M_AMD64)*/
 
